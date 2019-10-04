@@ -11,6 +11,7 @@ namespace Project0.App
             Console.WriteLine("1] Add a new customer");
             Console.WriteLine("2] Search for a customer");
             Console.WriteLine("3] Display details of an order");
+            Console.WriteLine("4] Display order history of a location");
             Console.WriteLine("What would you like to do?: ");
             string input = Console.ReadLine();
             if (input.Equals("1"))
@@ -28,6 +29,12 @@ namespace Project0.App
                 Console.WriteLine("What is the order ID?: ");
                 string orderId = Console.ReadLine();
                 Console.WriteLine($"Searching for order {orderId}");
+            }
+            else if (input.Equals("4"))
+            {
+                Console.WriteLine("What is the location ID?");
+                string locationId = Console.ReadLine();
+                Console.WriteLine($"Searching for order history of location {locationId}");
             }
             else
             {
