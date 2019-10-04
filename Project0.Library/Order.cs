@@ -10,7 +10,7 @@ namespace Project0.Library
         public List<Product> Products { get; set; }
         public bool ValidateOrderNotTooLarge()
         {
-            return true;
+            return Products.Count > 20;
         }
     }
 }
