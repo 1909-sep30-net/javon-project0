@@ -1,6 +1,6 @@
-﻿namespace Project0.Library
+﻿namespace Project0.Logic
 {
-    class Customer
+    public class Customer
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

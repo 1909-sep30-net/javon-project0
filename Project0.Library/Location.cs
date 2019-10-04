@@ -1,4 +1,4 @@
-﻿namespace Project0.Library
+﻿namespace Project0.Logic
 {
     class Location
     {
