@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Project0;
+using Project0.Logic;
 
-namespace Project0.Logic
+namespace Project0.Data
 {
-    static class MemoryStore
+    public static class MemoryStore
     {
         static public List<Customer> Customers { get; set; }
         static public List<Location> Locations { get; set; }
