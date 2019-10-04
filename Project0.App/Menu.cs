@@ -55,6 +55,10 @@ namespace Project0.App
                 string customerId = Console.ReadLine();
                 Console.WriteLine($"Searching for order history of customer {customerId}");
             }
+            else if (req.Equals(Request.Exit))
+            {
+                Console.WriteLine("Bye!");
+            }
             else
             {
                 Console.WriteLine("Invalid input");
