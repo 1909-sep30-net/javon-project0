@@ -1,4 +1,6 @@
-﻿namespace Project0.Data
+﻿using Project0.Logic;
+
+namespace Project0.Data
 {
     class OrderAccess
     {
