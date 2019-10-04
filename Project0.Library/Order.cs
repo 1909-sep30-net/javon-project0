@@ -2,7 +2,7 @@
 
 namespace Project0.Logic
 {
-    class Order
+    public class Order
     {
         public string StoreLocation { get; set; }
         public Customer Customer { get; set; }
