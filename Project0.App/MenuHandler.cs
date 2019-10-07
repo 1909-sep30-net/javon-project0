@@ -1,4 +1,5 @@
 ﻿using Project0.Data;
+using Project0.Logic;
 using System;
 
 namespace Project0.App
@@ -24,14 +25,28 @@ namespace Project0.App
             Console.WriteLine("What would the last name of the customer be?: ");
             string lastName = Console.ReadLine();
 
-            CustomerAccess.AddCustomer(firstName, lastName);
+            CustomerAccess.AddCustomer(new Customer(firstName, lastName));
 
             Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
         }
 
         private static void HandleRequestSearchCustomer()
         {
-            Console.WriteLine("What is the name of the customer you are searching for?");
+            Console.WriteLine("What is the first name of the customer you are searching for?");
+            string firstName = Console.ReadLine();
+
+            Console.WriteLine("What is the last name of the customer you are searching for?");
+            string lastName = Console.ReadLine();
+
+            Customer customer = CustomerAccess.GetCustomerByFirstAndLastName(firstName, lastName);
+            if (customer != null)
+            {
+                Console.WriteLine($"We have found customer {customer.FirstName} {customer.LastName}");
+            }
+            else
+            {
+                Console.WriteLine($"There is no customer named {firstName} {lastName}");
+            }
         }
 
         private static void HandleRequestDisplayDetailsOfOrder()

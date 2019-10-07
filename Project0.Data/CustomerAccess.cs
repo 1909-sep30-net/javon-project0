@@ -1,29 +1,26 @@
-﻿using Project0.Logic;
+﻿using System;
+using Project0.Logic;
 
 namespace Project0.Data
 {
     public class CustomerAccess
     {
-        public static void AddCustomer(string firstName, string lastName)
+        public static void AddCustomer(Customer customer)
         {
-            Customer customer = new Customer(firstName, lastName);
             MemoryStore.Customers.Add(customer);
         }
 
-        public static void RemoveCustomer(int id)
+        public static Customer GetCustomerByFirstAndLastName(string firstName, string lastName)
         {
-            //MemoryStore.Customers.remove(id);
-        }
+            foreach (Customer customer in MemoryStore.Customers)
+            {
+                if (customer.FirstName.Equals(firstName) && customer.LastName.Equals(lastName))
+                {
+                    return customer;
+                }
+            }
 
-        public static Customer GetCustomerById(int id)
-        {
-            //return MemoryStore.Customers.get(id);
             return null;
-        }
-
-        public static int GetNumberOfCustomers()
-        {
-            return MemoryStore.Customers.Count;
         }
     }
 }
