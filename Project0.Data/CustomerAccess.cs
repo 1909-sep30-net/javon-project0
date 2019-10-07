@@ -6,17 +6,19 @@ namespace Project0.Data
     {
         public static void AddCustomer(string firstName, string lastName)
         {
-            MemoryStore.Customers.Add(new Customer(firstName, lastName));
+            Customer customer = new Customer(firstName, lastName);
+            MemoryStore.Customers.Add(customer);
         }
 
         public static void RemoveCustomer(int id)
         {
-            MemoryStore.Customers.remove(id);
+            //MemoryStore.Customers.remove(id);
         }
 
         public static Customer GetCustomerById(int id)
         {
-            return MemoryStore.Customers.get(id);
+            //return MemoryStore.Customers.get(id);
+            return null;
         }
 
         public static int GetNumberOfCustomers()
