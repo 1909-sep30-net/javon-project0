@@ -8,7 +8,7 @@
             {
                 Menu.DisplayMenu();
                 Request req = Menu.PromptUser();
-                Menu.HandleRequest(req);
+                MenuHandler.HandleRequest(req);
             }
         }
     }
