@@ -4,9 +4,12 @@
     {
         static void Main(string[] args)
         {
-            Menu.DisplayMenu();
-            Request req = Menu.PromptUser();
-            Menu.HandleRequest(req);
+            while (true)
+            {
+                Menu.DisplayMenu();
+                Request req = Menu.PromptUser();
+                Menu.HandleRequest(req);
+            }
         }
     }
 }

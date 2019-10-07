@@ -71,6 +71,7 @@ namespace Project0.App
         private static void HandleRequestExit()
         {
             Console.WriteLine("Bye!");
+            Environment.Exit(0);
         }
 
         private static void HandleRequestInvalid()
