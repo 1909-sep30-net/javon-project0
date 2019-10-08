@@ -1,5 +1,6 @@
-﻿using Project0.Logic;
+﻿using Project0.Data;
 using System;
+using System.Collections.Generic;
 
 namespace Project0.App
 {
@@ -24,7 +25,7 @@ namespace Project0.App
             Console.WriteLine("What would the last name of the customer be?: ");
             string lastName = Console.ReadLine();
 
-            CustomerValidation.AddCustomer(firstName, lastName);
+            CustomerData.AddCustomer(firstName, lastName);
 
             Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
         }
@@ -37,10 +38,10 @@ namespace Project0.App
             Console.WriteLine("What is the last name of the customer you are searching for?");
             string lastName = Console.ReadLine();
 
-            Customer customer = CustomerValidation.GetCustomerByFirstAndLastName(firstName, lastName);
-            if (customer != null)
+            List<Customer> customers = CustomerData.GetCustomersByFirstAndLastName(firstName, lastName);
+            if (customers.Count == 0)
             {
-                Console.WriteLine($"We have found customer {customer.FirstName} {customer.LastName}");
+                Console.WriteLine($"We have found {customers.Count} customers");
             }
             else
             {

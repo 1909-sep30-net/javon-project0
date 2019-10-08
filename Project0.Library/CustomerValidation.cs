@@ -1,43 +1,41 @@
-﻿using Project0.Data;
-using System;
+﻿using System;
+using System.Linq;
 
 namespace Project0.Logic
 {
     public static class CustomerValidation
     {
-        public static void AddCustomer(string firstName, string lastName)
+        private const int maxNameLength = 20;
+        public static CustomerValidationMessage ValidateCustomer(string firstName, string lastName)
         {
-            if (firstName == "")
+            if (firstName.Length == 0)
             {
-                Console.WriteLine("First name is empty");
+                return CustomerValidationMessage.FirstNameEmpty;
             }
-            else if (lastName == "")
+            else if (lastName.Length == 0)
             {
-                Console.WriteLine("Last name is empty");
+                return CustomerValidationMessage.LastNameEmpty;
+            }
+            else if (firstName.Length > maxNameLength)
+            {
+                return CustomerValidationMessage.FirstNameTooLong;
+            }
+            else if (lastName.Length > maxNameLength)
+            {
+                return CustomerValidationMessage.LastNameTooLong;
+            }
+            else if (!firstName.All(Char.IsLetter))
+            {
+                return CustomerValidationMessage.FirstNameNotAlpha;
+            }
+            else if (!lastName.All(Char.IsLetter))
+            {
+                return CustomerValidationMessage.LastNameNotAlpha;
             }
             else
             {
-                CustomerData.AddCustomer(firstName, lastName);
+                return CustomerValidationMessage.Valid;
             }
-
-        }
-
-        public static Customer GetCustomerByFirstAndLastName(string firstName, string lastName)
-        {
-            if (firstName == "")
-            {
-                Console.WriteLine("Cannot search for empty first name");
-            }
-            else if (lastName == "")
-            {
-                Console.WriteLine("Cannot search for empty last name");
-            }
-            else
-            {
-                return CustomerData.GetCustomerByFirstAndLastName(firstName, lastName);
-            }
-
-            return null;
         }
     }
 }

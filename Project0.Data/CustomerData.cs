@@ -1,5 +1,4 @@
-﻿using System;
-using Project0.Logic;
+﻿using System.Collections.Generic;
 
 namespace Project0.Data
 {
@@ -10,17 +9,18 @@ namespace Project0.Data
             MemoryStore.Customers.Add(new Customer(firstName, lastName));
         }
 
-        public static Customer GetCustomerByFirstAndLastName(string firstName, string lastName)
+        public static List<Customer> GetCustomersByFirstAndLastName(string firstName, string lastName)
         {
+            List<Customer> customers = new List<Customer>();
             foreach (Customer customer in MemoryStore.Customers)
             {
                 if (customer.FirstName.Equals(firstName) && customer.LastName.Equals(lastName))
                 {
-                    return customer;
+                    customers.Add(customer);
                 }
             }
 
-            return null;
+            return customers;
         }
     }
 }
