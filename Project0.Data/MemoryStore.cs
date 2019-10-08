@@ -5,7 +5,29 @@ namespace Project0.Data
 {
     public static class MemoryStore
     {
-        static public List<Customer> Customers { get; set; } = new List<Customer>();
+        static public List<Customer> Customers { get; set; } = new List<Customer>()
+        {
+            new Customer()
+                {
+                    FirstName = "Javon",
+                    LastName = "Negahban"
+                },
+            new Customer()
+                {
+                    FirstName = "Ojan",
+                    LastName = "Negahban"
+                },
+            new Customer()
+                {
+                    FirstName = "Henry",
+                    LastName = "Ford"
+                },
+            new Customer()
+                {
+                    FirstName = "Bruce",
+                    LastName = "Lee"
+                },
+        };
         static public List<Location> Locations { get; set; } = new List<Location>()
         {
             new Location()
