@@ -1,15 +1,53 @@
-﻿namespace Project0.Logic
+﻿using System;
+
+namespace Project0.Logic
 {
     public class Location
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int zipcode
-
-        public Location(int id, string name)
+        private int id;
+        private string address;
+        private string city;
+        private int zipcode;
+        private USState state;
+        public int Id
         {
-            this.Id = id;
-            this.Name = name;
+            get => id;
+            set
+            {
+                id = value;
+            }
+        }
+        public string Address
+        {
+            get => address;
+            set
+            {
+                address = value;
+            }
+        }
+        public string City
+        {
+            get => city;
+            set
+            {
+                city = value;
+            }
+        }
+        public int Zipcode
+        {
+            get => zipcode;
+            set
+            {
+                zipcode = value;
+            }
+        }
+        public USState State
+        {
+            get => state;
+            set
+            {
+                state = value;
+            }
         }
     }
 }

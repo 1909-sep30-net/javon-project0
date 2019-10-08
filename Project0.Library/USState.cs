@@ -3,7 +3,7 @@
 namespace Project0.Logic
 {
     // State codes from source: https://gist.github.com/jabez007/4f15496af540a68fdb3449cd928cfc6b
-    public enum State
+    public enum USState
     {
         [Description("Alabama")]
         AL,
