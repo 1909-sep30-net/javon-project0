@@ -6,7 +6,7 @@ namespace Project0.Logic
     public static class CustomerValidation
     {
         private const int maxNameLength = 20;
-        public static CustomerValidationMessage ValidateCustomer(string firstName, string lastName)
+        public static CustomerValidationMessage ValidateCustomerName(string firstName, string lastName)
         {
             if (firstName.Length == 0) return CustomerValidationMessage.FirstNameEmpty;
             else if (lastName.Length == 0) return CustomerValidationMessage.LastNameEmpty;

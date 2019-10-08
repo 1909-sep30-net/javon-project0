@@ -1,4 +1,5 @@
 ﻿using Project0.Data;
+using Project0.Logic;
 using System;
 using System.Collections.Generic;
 
@@ -19,15 +20,24 @@ namespace Project0.App
 
         private static void HandleRequestAddCustomer()
         {
-            Console.WriteLine("What would the first name of the customer be?: ");
+            Console.WriteLine("What is the first name of the customer?: ");
             string firstName = Console.ReadLine();
 
-            Console.WriteLine("What would the last name of the customer be?: ");
+            Console.WriteLine("What is the last name of the customer?: ");
             string lastName = Console.ReadLine();
 
-            CustomerData.AddCustomer(firstName, lastName);
-
-            Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
+            CustomerValidationMessage msg = CustomerValidation.ValidateCustomerName(firstName, lastName);
+            if (msg == CustomerValidationMessage.FirstNameEmpty) Console.WriteLine("Customer first name is empty");
+            else if (msg == CustomerValidationMessage.LastNameEmpty) Console.WriteLine("Customer last name is empty");
+            else if (msg == CustomerValidationMessage.FirstNameTooLong) Console.WriteLine("Customer first name is too long");
+            else if (msg == CustomerValidationMessage.LastNameTooLong) Console.WriteLine("Customer last name is too long");
+            else if (msg == CustomerValidationMessage.FirstNameNotAlpha) Console.WriteLine("Customer first name is not alphabetic");
+            else if (msg == CustomerValidationMessage.LastNameNotAlpha) Console.WriteLine("Customer last name is not alphabetic");
+            else
+            {
+                CustomerData.AddCustomer(firstName, lastName);
+                Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
+            }
         }
 
         private static void HandleRequestSearchCustomer()
