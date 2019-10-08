@@ -6,8 +6,17 @@ namespace Project0.Logic
     public class Customer
     {
         private const int maxNameLength = 20;
+        private int id;
         private string firstName;
         private string lastName;
+        public int Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+            }
+        }
         public string FirstName
         {
             get => firstName;

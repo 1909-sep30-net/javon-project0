@@ -62,23 +62,23 @@ namespace Project0.App
 
         private static void HandleRequestDisplayDetailsOfOrder()
         {
-            Console.WriteLine("What is the order ID?: ");
-            string orderId = Console.ReadLine();
-            Console.WriteLine($"Searching for order {orderId}");
+            //Console.WriteLine("What is the order ID?: ");
+            //string orderId = Console.ReadLine();
+            //Console.WriteLine($"Searching for order {orderId}");
         }
 
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
-            Console.WriteLine("What is the location ID?");
-            string locationId = Console.ReadLine();
-            Console.WriteLine($"Searching for order history of location {locationId}");
+            //Console.WriteLine("What is the location ID?");
+            //string locationId = Console.ReadLine();
+            //Console.WriteLine($"Searching for order history of location {locationId}");
         }
 
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
-            Console.WriteLine("What is the customer ID?");
-            string customerId = Console.ReadLine();
-            Console.WriteLine($"Searching for order history of customer {customerId}");
+            //Console.WriteLine("What is the customer ID?");
+            //string customerId = Console.ReadLine();
+            //Console.WriteLine($"Searching for order history of customer {customerId}");
         }
 
         private static void HandleRequestExit()
