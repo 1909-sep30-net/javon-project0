@@ -1,13 +1,10 @@
 ﻿namespace Project0.Logic
 {
-    public enum CustomerValidationMessage
+    public enum CustomerFirstNameValidationMessage
     {
         FirstNameEmpty,
-        LastNameEmpty,
         FirstNameTooLong,
-        LastNameTooLong,
         FirstNameNotAlpha,
-        LastNameNotAlpha,
         Valid
     }
 }

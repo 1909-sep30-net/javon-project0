@@ -26,13 +26,14 @@ namespace Project0.App
             Console.WriteLine("What is the last name of the customer?: ");
             string lastName = Console.ReadLine();
 
-            CustomerValidationMessage msg = CustomerValidation.ValidateCustomerName(firstName, lastName);
-            if (msg == CustomerValidationMessage.FirstNameEmpty) Console.WriteLine("Customer first name is empty");
-            else if (msg == CustomerValidationMessage.LastNameEmpty) Console.WriteLine("Customer last name is empty");
-            else if (msg == CustomerValidationMessage.FirstNameTooLong) Console.WriteLine("Customer first name is too long");
-            else if (msg == CustomerValidationMessage.LastNameTooLong) Console.WriteLine("Customer last name is too long");
-            else if (msg == CustomerValidationMessage.FirstNameNotAlpha) Console.WriteLine("Customer first name is not alphabetic");
-            else if (msg == CustomerValidationMessage.LastNameNotAlpha) Console.WriteLine("Customer last name is not alphabetic");
+            CustomerFirstNameValidationMessage msgFirstName = CustomerValidation.ValidateCustomerFirstName(firstName);
+            CustomerLastNameValidationMessage msgLastName = CustomerValidation.ValidateCustomerLastName(lastName);
+            if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameEmpty) Console.WriteLine("Customer first name is empty");
+            else if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameTooLong) Console.WriteLine("Customer first name is too long");
+            else if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameNotAlpha) Console.WriteLine("Customer first name is not alphabetic");
+            else if (msgLastName == CustomerLastNameValidationMessage.LastNameEmpty) Console.WriteLine("Customer last name is empty");
+            else if (msgLastName == CustomerLastNameValidationMessage.LastNameTooLong) Console.WriteLine("Customer last name is too long");
+            else if (msgLastName == CustomerLastNameValidationMessage.LastNameNotAlpha) Console.WriteLine("Customer last name is not alphabetic");
             else
             {
                 CustomerData.AddCustomer(firstName, lastName);
