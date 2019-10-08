@@ -10,14 +10,14 @@ namespace Project0.Data
             MemoryStore.Customers.Add(cust);
         }
 
-        public static List<Customer> GetCustomersByLastName(string lastName)
+        public static List<Customer> GetCustomersByLastName(Customer customer)
         {
             List<Customer> customersWithLastName = new List<Customer>();
-            foreach (Customer customer in MemoryStore.Customers)
+            foreach (Customer c in MemoryStore.Customers)
             {
-                if (customer.LastName.Equals(lastName))
+                if (c.LastName == customer.LastName)
                 {
-                    customersWithLastName.Add(customer);
+                    customersWithLastName.Add(c);
                 }
             }
 

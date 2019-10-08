@@ -43,15 +43,26 @@ namespace Project0.App
 
         private static void HandleRequestSearchCustomer()
         {
-            Console.WriteLine("What is the last name of the customer you are searching for?");
-            string lastName = Console.ReadLine();
-
-            List<Customer> customersWithLastName = CustomerData.GetCustomersByLastName(lastName);
-            Console.WriteLine($"There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
-            foreach (Customer c in customersWithLastName)
+            try
             {
-                Console.WriteLine($"[{c.Id}] {c.FirstName} {c.LastName}");
+                Customer cust = new Customer();
+
+                Console.WriteLine("What is the last name of the customer you are searching for?");
+                string lastName = Console.ReadLine();
+                cust.LastName = lastName;
+
+                List<Customer> customersWithLastName = CustomerData.GetCustomersByLastName(cust);
+                Console.WriteLine($"There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
+                foreach (Customer c in customersWithLastName)
+                {
+                    Console.WriteLine($"[{c.Id}] {c.FirstName} {c.LastName}");
+                }
             }
+            catch (CustomerException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
 
         private static void HandleRequestDisplayDetailsOfOrder()
