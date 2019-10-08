@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Project0.Logic;
+using System.Collections.Generic;
 
 namespace Project0.Data
 {
     public class CustomerData
     {
-        public static void AddCustomer(string firstName, string lastName)
+        public static void AddCustomer(Customer cust)
         {
-            MemoryStore.Customers.Add(new Customer(firstName, lastName));
+            MemoryStore.Customers.Add(cust);
         }
 
         public static List<Customer> GetCustomersByFirstAndLastName(string firstName, string lastName)

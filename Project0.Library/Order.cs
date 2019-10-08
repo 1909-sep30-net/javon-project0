@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Project0.Data
+namespace Project0.Logic
 {
     public class Order
     {

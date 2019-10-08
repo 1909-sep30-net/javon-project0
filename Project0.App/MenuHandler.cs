@@ -20,24 +20,24 @@ namespace Project0.App
 
         private static void HandleRequestAddCustomer()
         {
-            Console.WriteLine("What is the first name of the customer?: ");
-            string firstName = Console.ReadLine();
-
-            Console.WriteLine("What is the last name of the customer?: ");
-            string lastName = Console.ReadLine();
-
-            CustomerFirstNameValidationMessage msgFirstName = CustomerValidation.ValidateCustomerFirstName(firstName);
-            CustomerLastNameValidationMessage msgLastName = CustomerValidation.ValidateCustomerLastName(lastName);
-            if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameEmpty) Console.WriteLine("Customer first name is empty");
-            else if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameTooLong) Console.WriteLine("Customer first name is too long");
-            else if (msgFirstName == CustomerFirstNameValidationMessage.FirstNameNotAlpha) Console.WriteLine("Customer first name is not alphabetic");
-            else if (msgLastName == CustomerLastNameValidationMessage.LastNameEmpty) Console.WriteLine("Customer last name is empty");
-            else if (msgLastName == CustomerLastNameValidationMessage.LastNameTooLong) Console.WriteLine("Customer last name is too long");
-            else if (msgLastName == CustomerLastNameValidationMessage.LastNameNotAlpha) Console.WriteLine("Customer last name is not alphabetic");
-            else
+            try
             {
-                CustomerData.AddCustomer(firstName, lastName);
-                Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
+                Customer cust = new Customer();
+
+                Console.WriteLine("What is the first name of the customer?");
+                string firstName = Console.ReadLine();
+                cust.FirstName = firstName;
+
+                Console.WriteLine("What is the last name of the customer?");
+                string lastName = Console.ReadLine();
+                cust.LastName = lastName;
+
+                CustomerData.AddCustomer(cust);
+                Console.WriteLine($"We have added a customer with name {cust.FirstName} {cust.LastName}");
+            }
+            catch (CustomerException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
