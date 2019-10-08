@@ -33,7 +33,7 @@ namespace Project0.App
                 cust.LastName = lastName;
 
                 CustomerData.AddCustomer(cust);
-                Console.WriteLine($"We have added a customer with name {cust.FirstName} {cust.LastName}");
+                Console.WriteLine($"The customer {cust.FirstName} {cust.LastName} has been added");
             }
             catch (CustomerException ex)
             {
@@ -43,20 +43,14 @@ namespace Project0.App
 
         private static void HandleRequestSearchCustomer()
         {
-            Console.WriteLine("What is the first name of the customer you are searching for?");
-            string firstName = Console.ReadLine();
-
             Console.WriteLine("What is the last name of the customer you are searching for?");
             string lastName = Console.ReadLine();
 
-            List<Customer> customers = CustomerData.GetCustomersByFirstAndLastName(firstName, lastName);
-            if (customers.Count == 0)
+            List<Customer> customersWithLastName = CustomerData.GetCustomersByLastName(lastName);
+            Console.WriteLine($"There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
+            foreach (Customer c in customersWithLastName)
             {
-                Console.WriteLine($"We have found {customers.Count} customers");
-            }
-            else
-            {
-                Console.WriteLine($"There is no customer named {firstName} {lastName}");
+                Console.WriteLine($"[{c.Id}] {c.FirstName} {c.LastName}");
             }
         }
 

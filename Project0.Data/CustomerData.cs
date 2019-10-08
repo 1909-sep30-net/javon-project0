@@ -10,18 +10,18 @@ namespace Project0.Data
             MemoryStore.Customers.Add(cust);
         }
 
-        public static List<Customer> GetCustomersByFirstAndLastName(string firstName, string lastName)
+        public static List<Customer> GetCustomersByLastName(string lastName)
         {
-            List<Customer> customers = new List<Customer>();
+            List<Customer> customersWithLastName = new List<Customer>();
             foreach (Customer customer in MemoryStore.Customers)
             {
-                if (customer.FirstName.Equals(firstName) && customer.LastName.Equals(lastName))
+                if (customer.LastName.Equals(lastName))
                 {
-                    customers.Add(customer);
+                    customersWithLastName.Add(customer);
                 }
             }
 
-            return customers;
+            return customersWithLastName;
         }
     }
 }
