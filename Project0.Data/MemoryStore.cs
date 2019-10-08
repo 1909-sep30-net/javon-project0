@@ -9,23 +9,23 @@ namespace Project0.Data
         {
             new Customer()
                 {
-                    FirstName = "Javon",
-                    LastName = "Negahban"
+                    FirstName = "javon",
+                    LastName = "negahban"
                 },
             new Customer()
                 {
-                    FirstName = "Ojan",
-                    LastName = "Negahban"
+                    FirstName = "ojan",
+                    LastName = "negahban"
                 },
             new Customer()
                 {
-                    FirstName = "Henry",
-                    LastName = "Ford"
+                    FirstName = "henry",
+                    LastName = "ford"
                 },
             new Customer()
                 {
-                    FirstName = "Bruce",
-                    LastName = "Lee"
+                    FirstName = "bruce",
+                    LastName = "lee"
                 },
         };
         static public List<Location> Locations { get; set; } = new List<Location>()

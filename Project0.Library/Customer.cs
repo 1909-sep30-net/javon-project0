@@ -23,7 +23,7 @@ namespace Project0.Logic
             set
             {
                 ValidateCustomerFirstName(value);
-                firstName = value;
+                firstName = value.ToLower();
             }
         }
         public string LastName
@@ -32,7 +32,7 @@ namespace Project0.Logic
             set
             {
                 ValidateCustomerLastName(value);
-                lastName = value;
+                lastName = value.ToLower();
             }
         }
 
