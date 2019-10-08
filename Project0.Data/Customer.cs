@@ -1,4 +1,7 @@
-﻿namespace Project0.Logic
+﻿using Project0.Data;
+using System;
+
+namespace Project0.Logic
 {
     public class Customer
     {

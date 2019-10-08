@@ -4,7 +4,7 @@ namespace Project0.Logic
 {
     public class Order
     {
-        public string StoreLocation { get; set; }
+        public Location StoreLocation { get; set; }
         public Customer Customer { get; set; }
         public string OrderDateTime { get; set; }
         public List<Product> Products { get; set; }
@@ -13,7 +13,7 @@ namespace Project0.Logic
             return Products.Count > 20;
         }
 
-        public Order(string storeLocation, Customer customer, string orderDateTime)
+        public Order(Location storeLocation, Customer customer, string orderDateTime)
         {
             this.StoreLocation = storeLocation;
             this.Customer = customer;

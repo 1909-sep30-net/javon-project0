@@ -16,12 +16,12 @@ namespace Project0.App
             Console.WriteLine("What would you like to do?: ");
         }
 
-        internal static Request PromptUser()
+        internal static MenuRequest PromptUser()
         {
             string input = Console.ReadLine();
             int inp = Int32.Parse(input);
 
-            return (Request)inp;
+            return (MenuRequest)inp;
         }
     }
 }

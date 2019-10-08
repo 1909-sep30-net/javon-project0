@@ -7,7 +7,7 @@
             while (true)
             {
                 Menu.DisplayMenu();
-                Request req = Menu.PromptUser();
+                MenuRequest req = Menu.PromptUser();
                 MenuHandler.HandleRequest(req);
             }
         }

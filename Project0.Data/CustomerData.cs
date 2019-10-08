@@ -3,11 +3,11 @@ using Project0.Logic;
 
 namespace Project0.Data
 {
-    public class CustomerAccess
+    public class CustomerData
     {
-        public static void AddCustomer(Customer customer)
+        public static void AddCustomer(string firstName, string lastName)
         {
-            MemoryStore.Customers.Add(customer);
+            MemoryStore.Customers.Add(new Customer(firstName, lastName));
         }
 
         public static Customer GetCustomerByFirstAndLastName(string firstName, string lastName)

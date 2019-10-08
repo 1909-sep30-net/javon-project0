@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Project0.Library\Project0.Logic.csproj" />
-  </ItemGroup>
-
 </Project>

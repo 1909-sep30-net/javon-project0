@@ -1,19 +1,18 @@
-﻿using Project0.Data;
-using Project0.Logic;
+﻿using Project0.Logic;
 using System;
 
 namespace Project0.App
 {
     class MenuHandler
     {
-        internal static void HandleRequest(Request req)
+        internal static void HandleRequest(MenuRequest req)
         {
-            if (req.Equals(Request.AddCustomer)) HandleRequestAddCustomer();
-            else if (req.Equals(Request.SearchCustomer)) HandleRequestSearchCustomer();
-            else if (req.Equals(Request.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
-            else if (req.Equals(Request.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
-            else if (req.Equals(Request.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
-            else if (req.Equals(Request.Exit)) HandleRequestExit();
+            if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
+            else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
+            else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
+            else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
             else HandleRequestInvalid();
         }
 
@@ -25,7 +24,7 @@ namespace Project0.App
             Console.WriteLine("What would the last name of the customer be?: ");
             string lastName = Console.ReadLine();
 
-            CustomerAccess.AddCustomer(new Customer(firstName, lastName));
+            CustomerValidation.AddCustomer(firstName, lastName);
 
             Console.WriteLine($"We have added a customer with name {firstName} {lastName}");
         }
@@ -38,7 +37,7 @@ namespace Project0.App
             Console.WriteLine("What is the last name of the customer you are searching for?");
             string lastName = Console.ReadLine();
 
-            Customer customer = CustomerAccess.GetCustomerByFirstAndLastName(firstName, lastName);
+            Customer customer = CustomerValidation.GetCustomerByFirstAndLastName(firstName, lastName);
             if (customer != null)
             {
                 Console.WriteLine($"We have found customer {customer.FirstName} {customer.LastName}");

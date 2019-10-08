@@ -1,6 +1,6 @@
 ﻿namespace Project0.App
 {
-    internal enum Request
+    internal enum MenuRequest
     {
         AddCustomer = 0,
         SearchCustomer = 1,
