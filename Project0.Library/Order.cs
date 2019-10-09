@@ -13,14 +13,6 @@ namespace Project0.Logic
         {
             return Products.Count > 20;
         }
-
-        public Order(Location storeLocation, Customer customer, string orderDateTime)
-        {
-            this.StoreLocation = storeLocation;
-            this.Customer = customer;
-            this.OrderDateTime = orderDateTime;
-        }
-
         public void AddProduct(Product product)
         {
             Products.Add(product);
