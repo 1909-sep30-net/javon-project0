@@ -73,10 +73,41 @@ namespace Project0.Data
                 {
                     StoreLocation = Locations[1],
                     Customer = Customers[2],
-                    OrderDateTime = DateTime.Now.AddHours(-5),
-
+                    OrderDateTime = DateTime.Now.AddHours(-5)
                 }
-        }
-        static public List<Product> Products { get; set; }
+        };
+        static public List<Product> Products { get; set; } = new List<Product>()
+        {
+            new Product()
+                {
+                    Name = "Butterscotch",
+                    Price = 20.56
+                },
+            new Product()
+                {
+                    Name = "Dark Chocolate Peppermint",
+                    Price = 15.78
+                },
+            new Product()
+                {
+                    Name = "White Winter Chai",
+                    Price = 9.78
+                },
+            new Product()
+                {
+                    Name = "Fresh Greens Tea",
+                    Price = 23.62
+                },
+            new Product()
+                {
+                    Name = "Pumpkin Pie",
+                    Price = 8.34
+                },
+            new Product()
+                {
+                    Name = "Jasmine Ancient Beauty Tea",
+                    Price = 30.12
+                }
+        };
     }
 }
