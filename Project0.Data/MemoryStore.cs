@@ -14,42 +14,49 @@ namespace Project0.Data
         {
             Product prd1 = new Product()
             {
+                Id = 1,
                 Name = "Butterscotch",
                 Price = 20.56
             };
 
             Product prd2 = new Product()
             {
+                Id = 2,
                 Name = "Dark Chocolate Peppermint",
                 Price = 15.78
             };
 
             Product prd3 = new Product()
             {
+                Id = 3,
                 Name = "White Winter Chai",
                 Price = 9.78
             };
 
             Product prd4 = new Product()
             {
+                Id = 4,
                 Name = "Fresh Greens Tea",
                 Price = 23.62
             };
 
             Product prd5 = new Product()
             {
+                Id = 5,
                 Name = "Pumpkin Pie",
                 Price = 8.34
             };
 
             Product prd6 = new Product()
             {
+                Id = 6,
                 Name = "Jasmine Ancient Beauty Tea",
                 Price = 30.12
             };
 
             Location loc1 = new Location()
             {
+                Id = 1,
                 Address = "8 Winding Street",
                 City = "Hilly Glory",
                 Zipcode = 71550,
@@ -61,6 +68,7 @@ namespace Project0.Data
 
             Location loc2 = new Location()
             {
+                Id = 2,
                 Address = "32 Bull",
                 City = "Ranch Plaza",
                 Zipcode = 90235,
@@ -71,6 +79,7 @@ namespace Project0.Data
 
             Location loc3 = new Location()
             {
+                Id = 3,
                 Address = "192 Main",
                 City = "Shining Beacon",
                 Zipcode = 89567,
@@ -83,36 +92,42 @@ namespace Project0.Data
 
             Customer cst1 = new Customer()
             {
+                Id = 1,
                 FirstName = "javon",
                 LastName = "negahban"
             };
 
             Customer cst2 = new Customer()
             {
+                Id = 2,
                 FirstName = "ojan",
                 LastName = "negahban"
             };
 
             Customer cst3 = new Customer()
             {
+                Id = 3,
                 FirstName = "henry",
                 LastName = "ford"
             };
 
             Customer cst4 = new Customer()
             {
+                Id = 4,
                 FirstName = "bruce",
                 LastName = "lee"
             };
 
             Customer cst5 = new Customer()
             {
+                Id = 5,
                 FirstName = "lucy",
                 LastName = "shepherd"
             };
 
             Order ord1 = new Order()
             {
+                Id = 1,
                 StoreLocation = loc2,
                 Customer = cst3,
                 OrderDateTime = DateTime.Now.AddHours(-5)
@@ -121,6 +136,7 @@ namespace Project0.Data
 
             Order ord2 = new Order()
             {
+                Id = 2,
                 StoreLocation = loc3,
                 Customer = cst4,
                 OrderDateTime = DateTime.Now.AddHours(-20)
@@ -130,6 +146,7 @@ namespace Project0.Data
 
             Order ord3 = new Order()
             {
+                Id = 3,
                 StoreLocation = loc1,
                 Customer = cst2,
                 OrderDateTime = DateTime.Now.AddHours(-2)
@@ -138,6 +155,7 @@ namespace Project0.Data
 
             Order ord4 = new Order()
             {
+                Id = 4,
                 StoreLocation = loc3,
                 Customer = cst4,
                 OrderDateTime = DateTime.Now.AddHours(-1)
@@ -148,6 +166,7 @@ namespace Project0.Data
 
             Order ord5 = new Order()
             {
+                Id = 5,
                 StoreLocation = loc1,
                 Customer = cst1,
                 OrderDateTime = DateTime.Now.AddHours(-11)
