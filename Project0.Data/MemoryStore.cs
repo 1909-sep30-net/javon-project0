@@ -1,4 +1,5 @@
 ﻿using Project0.Logic;
+using System;
 using System.Collections.Generic;
 
 namespace Project0.Data
@@ -66,7 +67,16 @@ namespace Project0.Data
                     State = USState.MA
                 }
         };
-        static public List<Order> Orders { get; set; }
+        static public List<Order> Orders { get; set; } = new List<Order>()
+        {
+            new Order()
+                {
+                    StoreLocation = Locations[1],
+                    Customer = Customers[2],
+                    OrderDateTime = DateTime.Now.AddHours(-5),
+
+                }
+        }
         static public List<Product> Products { get; set; }
     }
 }

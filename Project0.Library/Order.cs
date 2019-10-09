@@ -5,17 +5,33 @@ namespace Project0.Logic
 {
     public class Order
     {
+        private const int maxQtySize = 10;
+
         public Location StoreLocation { get; set; }
         public Customer Customer { get; set; }
         public DateTime OrderDateTime { get; set; }
-        public Dictionary<Product, int> Products { get; set; }
-        public bool ValidateOrderNotTooLarge()
+        public Dictionary<Product, int> Products { get; set; } = new Dictionary<Product, int>();
+        public void ValidateOrderNotTooLarge()
         {
-            return Products.Count > 20;
+            foreach (KeyValuePair<Product, int> entry in Products)
+            {
+                if (entry.Value > maxQtySize)
+                {
+                    throw new OrderException($"{entry.Key} order too large");
+                }
+            }
         }
         public void AddProduct(Product product, int qty)
         {
-            Products.Add(product, qty);
+            try
+            {
+                ValidateOrderNotTooLarge();
+                Products.Add(product, qty);
+            }
+            catch (OrderException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
