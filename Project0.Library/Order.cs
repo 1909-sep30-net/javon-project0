@@ -17,7 +17,7 @@ namespace Project0.Logic
                 throw new OrderException($"{product} of quantity {qty} item too large");
             }
         }
-        public void AddProduct(Product product, int qty)
+        public void AddLineItem(Product product, int qty)
         {
             ValidateItemNotTooLarge(product, qty);
             LineItems.Add(product, qty);
