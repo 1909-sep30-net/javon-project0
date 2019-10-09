@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Project0.Logic
 {
@@ -6,7 +7,7 @@ namespace Project0.Logic
     {
         public Location StoreLocation { get; set; }
         public Customer Customer { get; set; }
-        public string OrderDateTime { get; set; }
+        public DateTime OrderDateTime { get; set; }
         public List<Product> Products { get; set; }
         public bool ValidateOrderNotTooLarge()
         {
