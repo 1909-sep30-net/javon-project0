@@ -7,6 +7,7 @@
         DisplayDetailsOfOrder = 2,
         DisplayOrderHistoryOfLocation = 3,
         DisplayOrderHistoryOfCustomer = 4,
-        Exit = 5
+        DisplayAllLocations = 5,
+        Exit = 6
     }
 }

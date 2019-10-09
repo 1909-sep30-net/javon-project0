@@ -12,7 +12,8 @@ namespace Project0.App
             Console.WriteLine("2] Display details of an order");
             Console.WriteLine("3] Display order history of a location");
             Console.WriteLine("4] Display order history of a customer");
-            Console.WriteLine("5] Exit");
+            Console.WriteLine("5] Display all locations");
+            Console.WriteLine("6] Exit");
             Console.WriteLine("What would you like to do?: ");
         }
 

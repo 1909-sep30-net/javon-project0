@@ -14,6 +14,7 @@ namespace Project0.App
             else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
             else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
             else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
+            else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
             else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
             else HandleRequestInvalid();
         }
@@ -84,6 +85,11 @@ namespace Project0.App
             //Console.WriteLine("What is the customer ID?");
             //string customerId = Console.ReadLine();
             //Console.WriteLine($"Searching for order history of customer {customerId}");
+        }
+
+        private static void HandleRequestDisplayAllLocations()
+        {
+            Console.WriteLine("Locations:");
         }
 
         private static void HandleRequestExit()
