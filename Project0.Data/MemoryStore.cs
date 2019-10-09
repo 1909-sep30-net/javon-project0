@@ -12,127 +12,153 @@ namespace Project0.Data
         static public List<Order> Orders { get; set; }
         static MemoryStore()
         {
-            Products = new List<Product>()
+            Product prd1 = new Product()
             {
-                new Product()
-                {
-                    Name = "Butterscotch",
-                    Price = 20.56
-                },
-                new Product()
-                {
-                    Name = "Dark Chocolate Peppermint",
-                    Price = 15.78
-                },
-                new Product()
-                {
-                    Name = "White Winter Chai",
-                    Price = 9.78
-                },
-                new Product()
-                {
-                    Name = "Fresh Greens Tea",
-                    Price = 23.62
-                },
-                new Product()
-                {
-                    Name = "Pumpkin Pie",
-                    Price = 8.34
-                },
-                new Product()
-                {
-                    Name = "Jasmine Ancient Beauty Tea",
-                    Price = 30.12
-                }
+                Name = "Butterscotch",
+                Price = 20.56
             };
 
-            Locations = new List<Location>()
+            Product prd2 = new Product()
             {
-                new Location()
-                {
-                    Address = "8 Winding Street",
-                    City = "Hilly Glory",
-                    Zipcode = 71550,
-                    State = USState.AK
-                },
-                new Location()
-                {
-                    Address = "32 Bull",
-                    City = "Ranch Plaza",
-                    Zipcode = 90235,
-                    State = USState.LA
-                },
-                new Location()
-                {
-                    Address = "192 Main",
-                    City = "Shining Beacon",
-                    Zipcode = 89567,
-                    State = USState.SD
-                }
+                Name = "Dark Chocolate Peppermint",
+                Price = 15.78
             };
 
-            Customers = new List<Customer>()
+            Product prd3 = new Product()
             {
-                new Customer()
-                {
-                    FirstName = "javon",
-                    LastName = "negahban"
-                },
-                new Customer()
-                {
-                    FirstName = "ojan",
-                    LastName = "negahban"
-                },
-                new Customer()
-                {
-                    FirstName = "henry",
-                    LastName = "ford"
-                },
-                new Customer()
-                {
-                    FirstName = "bruce",
-                    LastName = "lee"
-                },
-                new Customer()
-                {
-                    FirstName = "lucy",
-                    LastName = "shepherd"
-                }
+                Name = "White Winter Chai",
+                Price = 9.78
             };
 
-            Orders = new List<Order>()
+            Product prd4 = new Product()
             {
-                new Order()
-                {
-                    StoreLocation = Locations[1],
-                    Customer = Customers[2],
-                    OrderDateTime = DateTime.Now.AddHours(-5)
-                },
-                new Order()
-                {
-                    StoreLocation = Locations[2],
-                    Customer = Customers[3],
-                    OrderDateTime = DateTime.Now.AddHours(-20)
-                },
-                new Order()
-                {
-                    StoreLocation = Locations[3],
-                    Customer = Customers[1],
-                    OrderDateTime = DateTime.Now.AddHours(-2)
-                },
-                new Order()
-                {
-                    StoreLocation = Locations[3],
-                    Customer = Customers[1],
-                    OrderDateTime = DateTime.Now.AddHours(-1)
-                },
-                new Order()
-                {
-                    StoreLocation = Locations[3],
-                    Customer = Customers[0],
-                    OrderDateTime = DateTime.Now.AddHours(-11)
-                }
+                Name = "Fresh Greens Tea",
+                Price = 23.62
             };
+
+            Product prd5 = new Product()
+            {
+                Name = "Pumpkin Pie",
+                Price = 8.34
+            };
+
+            Product prd6 = new Product()
+            {
+                Name = "Jasmine Ancient Beauty Tea",
+                Price = 30.12
+            };
+
+            Location loc1 = new Location()
+            {
+                Address = "8 Winding Street",
+                City = "Hilly Glory",
+                Zipcode = 71550,
+                State = USState.AK
+            };
+            loc1.AddProduct(prd3, 4);
+            loc1.AddProduct(prd4, 11);
+            loc1.AddProduct(prd6, 21);
+
+            Location loc2 = new Location()
+            {
+                Address = "32 Bull",
+                City = "Ranch Plaza",
+                Zipcode = 90235,
+                State = USState.LA
+            };
+            loc2.AddProduct(prd2, 8);
+            loc2.AddProduct(prd5, 1);
+
+            Location loc3 = new Location()
+            {
+                Address = "192 Main",
+                City = "Shining Beacon",
+                Zipcode = 89567,
+                State = USState.SD
+            };
+            loc3.AddProduct(prd1, 6);
+            loc3.AddProduct(prd3, 15);
+            loc3.AddProduct(prd5, 1);
+            loc3.AddProduct(prd6, 2);
+
+            Customer cst1 = new Customer()
+            {
+                FirstName = "javon",
+                LastName = "negahban"
+            };
+
+            Customer cst2 = new Customer()
+            {
+                FirstName = "ojan",
+                LastName = "negahban"
+            };
+
+            Customer cst3 = new Customer()
+            {
+                FirstName = "henry",
+                LastName = "ford"
+            };
+
+            Customer cst4 = new Customer()
+            {
+                FirstName = "bruce",
+                LastName = "lee"
+            };
+
+            Customer cst5 = new Customer()
+            {
+                FirstName = "lucy",
+                LastName = "shepherd"
+            };
+
+            Order ord1 = new Order()
+            {
+                StoreLocation = loc2,
+                Customer = cst3,
+                OrderDateTime = DateTime.Now.AddHours(-5)
+            };
+            ord1.AddLineItem(prd2, 1);
+
+            Order ord2 = new Order()
+            {
+                StoreLocation = loc3,
+                Customer = cst4,
+                OrderDateTime = DateTime.Now.AddHours(-20)
+            };
+            ord2.AddLineItem(prd1, 2);
+            ord2.AddLineItem(prd3, 1);
+
+            Order ord3 = new Order()
+            {
+                StoreLocation = loc1,
+                Customer = cst2,
+                OrderDateTime = DateTime.Now.AddHours(-2)
+            };
+            ord3.AddLineItem(prd4, 3);
+
+            Order ord4 = new Order()
+            {
+                StoreLocation = loc3,
+                Customer = cst4,
+                OrderDateTime = DateTime.Now.AddHours(-1)
+            };
+            ord4.AddLineItem(prd6, 3);
+            ord4.AddLineItem(prd5, 1);
+            ord4.AddLineItem(prd1, 1);
+
+            Order ord5 = new Order()
+            {
+                StoreLocation = loc1,
+                Customer = cst1,
+                OrderDateTime = DateTime.Now.AddHours(-11)
+            };
+            ord5.AddLineItem(prd2, 5);
+            ord5.AddLineItem(prd1, 7);
+
+            Products = new List<Product>() { prd1, prd2, prd3, prd4, prd5, prd6 };
+            Locations = new List<Location>() { loc1, loc2, loc3 };
+            Customers = new List<Customer>() { cst1, cst2, cst3, cst4, cst5 };
+            Orders = new List<Order>() { ord1, ord2, ord3, ord4, ord5 };
         }
     }
 }
