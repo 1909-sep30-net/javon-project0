@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace Project0.Logic
 {
@@ -9,6 +9,7 @@ namespace Project0.Logic
         private string city;
         private int zipcode;
         private USState state;
+        private Dictionary<Product, int> inventory = new Dictionary<Product, int>();
         public int Id
         {
             get => id;
@@ -48,6 +49,10 @@ namespace Project0.Logic
             {
                 state = value;
             }
+        }
+        public void AddProduct(Product product, int stock)
+        {
+            inventory.Add(product, stock);
         }
     }
 }
