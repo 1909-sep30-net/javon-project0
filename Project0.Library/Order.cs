@@ -6,6 +6,7 @@ namespace Project0.Logic
     public class Order
     {
         private const int maxQtySize = 10;
+        public int Id { get; set; }
         public Location StoreLocation { get; set; }
         public Customer Customer { get; set; }
         public DateTime OrderDateTime { get; set; }
