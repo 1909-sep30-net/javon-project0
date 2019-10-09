@@ -10,19 +10,16 @@ namespace Project0.Logic
         public Customer Customer { get; set; }
         public DateTime OrderDateTime { get; set; }
         public Dictionary<Product, int> LineItems { get; set; } = new Dictionary<Product, int>();
-        public void ValidateOrderNotTooLarge()
+        public void ValidateItemNotTooLarge(Product product, int qty)
         {
-            foreach (KeyValuePair<Product, int> entry in LineItems)
+            if (qty > maxQtySize)
             {
-                if (entry.Value > maxQtySize)
-                {
-                    throw new OrderException($"{entry.Key} item too large");
-                }
+                throw new OrderException($"{product} of quantity {qty} item too large");
             }
         }
         public void AddProduct(Product product, int qty)
         {
-            ValidateOrderNotTooLarge();
+            ValidateItemNotTooLarge(product, qty);
             LineItems.Add(product, qty);
         }
     }
