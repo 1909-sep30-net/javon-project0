@@ -89,7 +89,12 @@ namespace Project0.App
 
         private static void HandleRequestDisplayAllLocations()
         {
+            List<Location> locations = LocationData.GetLocations();
             Console.WriteLine("Locations:");
+            foreach (Location loc in locations)
+            {
+                Console.WriteLine(loc);
+            }
         }
 
         private static void HandleRequestExit()

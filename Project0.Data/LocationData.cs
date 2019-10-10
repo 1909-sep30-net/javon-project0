@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Project0.Data
 {
-    class LocationData
+    public class LocationData
     {
-        public static List<Location> getLocations()
+        public static List<Location> GetLocations()
         {
             return MemoryStore.Locations;
         }

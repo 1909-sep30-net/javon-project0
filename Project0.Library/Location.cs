@@ -54,5 +54,10 @@ namespace Project0.Logic
         {
             inventory.Add(product, stock);
         }
+
+        public override string ToString()
+        {
+            return $"[{Id}] {Address}, {City}, {State}, {Zipcode}";
+        }
     }
 }
