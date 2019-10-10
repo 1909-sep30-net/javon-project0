@@ -24,7 +24,7 @@ namespace Project0.Logic
         {
             if (qty > maxQtySize)
             {
-                throw new OrderException($"{product} of quantity {qty} item too large");
+                throw new OrderException($"[!] {product} of quantity {qty} item too large");
             }
         }
         public void AddLineItem(Product product, int qty)

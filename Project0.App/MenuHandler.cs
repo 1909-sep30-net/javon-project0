@@ -25,16 +25,16 @@ namespace Project0.App
             {
                 Customer cust = new Customer();
 
-                Console.WriteLine("What is the first name of the customer?");
+                Console.WriteLine("[?] What is the first name of the customer");
                 string firstName = Console.ReadLine();
                 cust.FirstName = firstName;
 
-                Console.WriteLine("What is the last name of the customer?");
+                Console.WriteLine("[?] What is the last name of the customer");
                 string lastName = Console.ReadLine();
                 cust.LastName = lastName;
 
                 CustomerData.AddCustomer(cust);
-                Console.WriteLine($"The customer {cust.FirstName} {cust.LastName} has been added");
+                Console.WriteLine($"[+] The customer {cust.FirstName} {cust.LastName} has been added");
             }
             catch (CustomerException ex)
             {
@@ -48,12 +48,12 @@ namespace Project0.App
             {
                 Customer cust = new Customer();
 
-                Console.WriteLine("What is the last name of the customer you are searching for?");
+                Console.WriteLine("[?] What is the last name of the customer you are searching for");
                 string lastName = Console.ReadLine();
                 cust.LastName = lastName;
 
                 List<Customer> customersWithLastName = CustomerData.GetCustomersByLastName(cust);
-                Console.WriteLine($"There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
+                Console.WriteLine($"[*] There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
                 foreach (Customer c in customersWithLastName)
                 {
                     Console.WriteLine($"[{c.Id}] {c.FirstName} {c.LastName}");
@@ -68,7 +68,7 @@ namespace Project0.App
 
         private static void HandleRequestDisplayDetailsOfOrder()
         {
-            Console.WriteLine("What is the order ID?: ");
+            Console.WriteLine("[?] What is the order ID");
             string orderId = Console.ReadLine();
             int oId;
             if (Int32.TryParse(orderId, out oId))
@@ -91,7 +91,7 @@ namespace Project0.App
 
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
-            Console.WriteLine("What is the location ID?");
+            Console.WriteLine("[?] What is the location ID");
             string locationId = Console.ReadLine();
             int lId;
             if (Int32.TryParse(locationId, out lId))
@@ -110,7 +110,7 @@ namespace Project0.App
 
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
-            Console.WriteLine("What is the customer ID?");
+            Console.WriteLine("[?] What is the customer ID");
             string customerId = Console.ReadLine();
             int cId;
             if(Int32.TryParse(customerId, out cId))
@@ -130,7 +130,7 @@ namespace Project0.App
         private static void HandleRequestDisplayAllLocations()
         {
             List<Location> locations = LocationData.GetLocations();
-            Console.WriteLine("Locations:");
+            Console.WriteLine("[*] Locations");
             foreach (Location loc in locations)
             {
                 Console.WriteLine(loc);
@@ -139,13 +139,13 @@ namespace Project0.App
 
         private static void HandleRequestExit()
         {
-            Console.WriteLine("Bye!");
+            Console.WriteLine("[*] Bye!");
             Environment.Exit(0);
         }
 
         private static void HandleRequestInvalid()
         {
-            Console.WriteLine("Invalid input");
+            Console.WriteLine("[!] Invalid input");
         }
     }
 }

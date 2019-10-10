@@ -19,8 +19,29 @@ namespace Project0.App
 
         internal static MenuRequest PromptUser()
         {
-            string input = Console.ReadLine();
-            int inp = Int32.Parse(input);
+            int inp = 1000;
+            try
+            {
+                string input = Console.ReadLine();
+                inp = Int32.Parse(input);
+                
+            }
+            catch (ArgumentNullException ex)
+            {
+                Console.WriteLine("[!] Null argument");
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine("[!] Wrong format - input needs to be an integer");
+            }
+            catch (OverflowException ex)
+            {
+                Console.WriteLine("[!] Overflow - input should not be out of an integer range");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return (MenuRequest)inp;
         }

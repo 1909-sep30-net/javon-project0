@@ -1,4 +1,6 @@
-﻿namespace Project0.App
+﻿using System;
+
+namespace Project0.App
 {
     class ConsoleApp
     {

@@ -38,16 +38,16 @@ namespace Project0.Logic
 
         private void ValidateCustomerFirstName(string first)
         {
-            if (first.Length == 0) throw new CustomerException("First name is empty");
-            else if (first.Length > maxNameLength) throw new CustomerException($"First name is longer than {maxNameLength} characters");
-            else if (!first.All(Char.IsLetter)) throw new CustomerException("First name is not alphabetical");
+            if (first.Length == 0) throw new CustomerException("[!] First name is empty");
+            else if (first.Length > maxNameLength) throw new CustomerException($"[!] First name is longer than {maxNameLength} characters");
+            else if (!first.All(Char.IsLetter)) throw new CustomerException("[!] First name is not alphabetical");
         }
 
         private void ValidateCustomerLastName(string last)
         {
-            if (last.Length == 0) throw new CustomerException("Last name is empty");
-            else if (last.Length > maxNameLength) throw new CustomerException($"Last name is longer than {maxNameLength} characters");
-            else if (!last.All(Char.IsLetter)) throw new CustomerException("Last name is not alphabetical");
+            if (last.Length == 0) throw new CustomerException("[!] Last name is empty");
+            else if (last.Length > maxNameLength) throw new CustomerException($"[!] Last name is longer than {maxNameLength} characters");
+            else if (!last.All(Char.IsLetter)) throw new CustomerException("[!] Last name is not alphabetical");
         }
 
         public override String ToString()
