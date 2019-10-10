@@ -85,15 +85,27 @@ namespace Project0.App
             }
             else
             {
-                Console.WriteLine("[!] Input was not an integer");
+                Console.WriteLine("[!] Input is not an integer");
             }
         }
 
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
-            //Console.WriteLine("What is the location ID?");
-            //string locationId = Console.ReadLine();
-            //Console.WriteLine($"Searching for order history of location {locationId}");
+            Console.WriteLine("What is the location ID?");
+            string locationId = Console.ReadLine();
+            int lId;
+            if (Int32.TryParse(locationId, out lId))
+            {
+                List<Order> ordersWithLocation = OrderData.GetOrdersByLocation(lId);
+                foreach (Order ord in ordersWithLocation)
+                {
+                    Console.WriteLine(ord);
+                }
+            }
+            else
+            {
+                Console.WriteLine("[!] Input is not an integer");
+            }
         }
 
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
