@@ -74,7 +74,14 @@ namespace Project0.App
             if (Int32.TryParse(orderId, out oId))
             {
                 Order order = OrderData.GetOrderById(oId);
-                Console.WriteLine(order);
+                if (order != null)
+                {
+                    Console.WriteLine(order);
+                }
+                else
+                {
+                    Console.WriteLine("[!] Order does not exist in the database");
+                }
             }
             else
             {
