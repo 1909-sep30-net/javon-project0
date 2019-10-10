@@ -110,9 +110,21 @@ namespace Project0.App
 
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
-            //Console.WriteLine("What is the customer ID?");
-            //string customerId = Console.ReadLine();
-            //Console.WriteLine($"Searching for order history of customer {customerId}");
+            Console.WriteLine("What is the customer ID?");
+            string customerId = Console.ReadLine();
+            int cId;
+            if(Int32.TryParse(customerId, out cId))
+            {
+                List<Order> ordersWithCustomer = OrderData.GetOrdersByCustomer(cId);
+                foreach (Order ord in ordersWithCustomer)
+                {
+                    Console.WriteLine(ord);
+                }
+            }
+            else
+            {
+                Console.WriteLine("[!] Input is not an integer");
+            }
         }
 
         private static void HandleRequestDisplayAllLocations()
