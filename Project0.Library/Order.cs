@@ -5,7 +5,8 @@ namespace Project0.Logic
 {
     public class Order
     {
-        private const int maxQtySize = 10;
+        private const int maxQtySize = 20;
+        private const int maxLines = 50;
         public int Id { get; set; }
         public Location StoreLocation { get; set; }
         public Customer Customer { get; set; }
@@ -20,6 +21,13 @@ namespace Project0.Logic
                 return sum;
             }
         }
+        private void ValidateEnoughLines()
+        {
+            if (LineItems.Keys.Count < maxLines)
+            {
+                throw new OrderException($"[!] Too many lines for this order");
+            }
+        }
         private void ValidateItemNotTooLarge(Product product, int qty)
         {
             if (qty > maxQtySize)
@@ -29,6 +37,7 @@ namespace Project0.Logic
         }
         public void AddLineItem(Product product, int qty)
         {
+            ValidateEnoughLines();
             ValidateItemNotTooLarge(product, qty);
             LineItems.Add(product, qty);
         }
