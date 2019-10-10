@@ -49,5 +49,10 @@ namespace Project0.Logic
             else if (last.Length > maxNameLength) throw new CustomerException($"Last name is longer than {maxNameLength} characters");
             else if (!last.All(Char.IsLetter)) throw new CustomerException("Last name is not alphabetical");
         }
+
+        public override String ToString()
+        {
+            return $"[{Id}] {FirstName} {LastName}";
+        }
     }
 }

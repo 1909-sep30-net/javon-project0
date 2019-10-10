@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Project0.Data
 {
-    public class LocationData
+    public static class LocationData
     {
         public static List<Location> GetLocations()
         {

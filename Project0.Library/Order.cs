@@ -11,7 +11,16 @@ namespace Project0.Logic
         public Customer Customer { get; set; }
         public DateTime OrderDateTime { get; set; }
         public Dictionary<Product, int> LineItems { get; set; } = new Dictionary<Product, int>();
-        public void ValidateItemNotTooLarge(Product product, int qty)
+        public double Total
+        {
+            get
+            {
+                double sum = 0;
+                foreach (var li in LineItems) sum += li.Key.Price * li.Value;
+                return sum;
+            }
+        }
+        private void ValidateItemNotTooLarge(Product product, int qty)
         {
             if (qty > maxQtySize)
             {
@@ -22,6 +31,21 @@ namespace Project0.Logic
         {
             ValidateItemNotTooLarge(product, qty);
             LineItems.Add(product, qty);
+        }
+
+        public override String ToString()
+        {
+            String header = $"[Order] ({Id})\n" +
+                            $"[Location] {StoreLocation}\n" +
+                            $"[Customer] {Customer}\n" +
+                            $"[Datetime] {OrderDateTime}\n";
+            String body = "";
+            foreach (var li in LineItems)
+            {
+                body += $"[Product] ({li.Key.Id}) [Name] {li.Key.Name} [Price] ${li.Key.Price} [Quantity] {li.Value}\n";
+            }
+            String footer = $"Total: ${Total}";
+            return header + body + footer;
         }
     }
 }

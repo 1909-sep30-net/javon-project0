@@ -68,9 +68,18 @@ namespace Project0.App
 
         private static void HandleRequestDisplayDetailsOfOrder()
         {
-            //Console.WriteLine("What is the order ID?: ");
-            //string orderId = Console.ReadLine();
-            //Console.WriteLine($"Searching for order {orderId}");
+            Console.WriteLine("What is the order ID?: ");
+            string orderId = Console.ReadLine();
+            int oId;
+            if (Int32.TryParse(orderId, out oId))
+            {
+                Order order = OrderData.GetOrderById(oId);
+                Console.WriteLine(order);
+            }
+            else
+            {
+                Console.WriteLine("[!] Input was not an integer");
+            }
         }
 
         private static void HandleRequestDisplayOrderHistoryOfLocation()

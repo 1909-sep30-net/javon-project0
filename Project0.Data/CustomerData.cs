@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Project0.Data
 {
-    public class CustomerData
+    public static class CustomerData
     {
         public static void AddCustomer(Customer cust)
         {
