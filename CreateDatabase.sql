@@ -105,4 +105,12 @@ INSERT INTO TThreeTeas.Order (LocationID, CustomerID, OrderTime) VALUES
 
 -- INSERT INTO LineItems for each Order
 INSERT INTO TThreeTeas.LineItem (OrderID, ProductID, Quantity) VALUES
-	(1, 2)
+	(1, 2, 1),
+	(2, 1, 4),
+	(2, 3, 1),
+	(3, 4, 3),
+	(4, 6, 3),
+	(4, 5, 1),
+	(4, 1, 1),
+	(5, 4, 5),
+	(5, 6, 3);
