@@ -23,7 +23,7 @@ namespace Project0.Logic
         }
         private void ValidateEnoughLines()
         {
-            if (LineItems.Keys.Count < maxLines)
+            if (LineItems.Keys.Count > maxLines)
             {
                 throw new OrderException($"[!] Too many lines for this order");
             }
@@ -42,16 +42,16 @@ namespace Project0.Logic
             LineItems.Add(product, qty);
         }
 
-        public override String ToString()
+        public override string ToString()
         {
-            String header = $"[Order] ({Id})\n" +
-                            $"[Location] {StoreLocation}\n" +
-                            $"[Customer] {Customer}\n" +
+            String header = $"[Order {Id}]\n" +
+                            $"{StoreLocation}\n" +
+                            $"{Customer}\n" +
                             $"[Datetime] {OrderDateTime}\n";
             String body = "";
             foreach (var li in LineItems)
             {
-                body += $"[Product] ({li.Key.Id}) [Name] {li.Key.Name} [Price] ${li.Key.Price} [Quantity] {li.Value}\n";
+                body += $"{li.Key} [Quantity] {li.Value}\n";
             }
             String footer = $"Total: ${Total}";
             return header + body + footer;

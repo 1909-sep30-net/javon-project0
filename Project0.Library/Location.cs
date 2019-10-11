@@ -57,7 +57,7 @@ namespace Project0.Logic
 
         public override string ToString()
         {
-            return $"[{Id}] {Address}, {City}, {State}, {Zipcode}";
+            return $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}";
         }
     }
 }

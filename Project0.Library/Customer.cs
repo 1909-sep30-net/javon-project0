@@ -50,9 +50,9 @@ namespace Project0.Logic
             else if (!last.All(Char.IsLetter)) throw new CustomerException("[!] Last name is not alphabetical");
         }
 
-        public override String ToString()
+        public override string ToString()
         {
-            return $"[{Id}] {FirstName} {LastName}";
+            return $"[Customer {Id}] {FirstName} {LastName}";
         }
     }
 }
