@@ -133,7 +133,7 @@ namespace Project0.Data
                 Customer = cst3,
                 OrderDateTime = DateTime.Now.AddHours(-5)
             };
-            ord1.AddLineItem(prd2, 1);
+            ord1.AddLineItem(prd2, 1); 
 
             Order ord2 = new Order()
             {
