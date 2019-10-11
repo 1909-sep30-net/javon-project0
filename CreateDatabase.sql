@@ -2,12 +2,12 @@
 -- Create manually in Azure
 
 -- DROP all previous tables
-DROP TABLE Product;
-DROP TABLE Location;
-DROP TABLE Inventory;
-DROP TABLE Customer;
-DROP TABLE Orders;
 DROP TABLE LineItem;
+DROP TABLE Orders;
+DROP TABLE Customer;
+DROP TABLE Inventory;
+DROP TABLE Location;
+DROP TABLE Product;
 
 -- CREATE TABLE Product
 CREATE TABLE Product (
