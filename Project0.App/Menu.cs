@@ -26,18 +26,6 @@ namespace Project0.App
                 inp = Int32.Parse(input);
                 
             }
-            catch (ArgumentNullException ex)
-            {
-                Console.WriteLine("[!] Null argument");
-            }
-            catch (FormatException ex)
-            {
-                Console.WriteLine("[!] Wrong format - input needs to be an integer");
-            }
-            catch (OverflowException ex)
-            {
-                Console.WriteLine("[!] Overflow - input should not be out of an integer range");
-            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);

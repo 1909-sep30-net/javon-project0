@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Project0.Logic
 {
@@ -57,7 +58,19 @@ namespace Project0.Logic
 
         public override string ToString()
         {
-            return $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}";
+            String str = $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}\n" +
+                   $"[Inventory]\n";
+            foreach (var stock in inventory)
+            {
+                str += $"{stock.Key} [Quantity] {stock.Value}\n";
+            }
+
+            return str;
+        }
+
+        internal void DecrementStock(Product product, int qty)
+        {
+            inventory[product] -= qty;
         }
     }
 }

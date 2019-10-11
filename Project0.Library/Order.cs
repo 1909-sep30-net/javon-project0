@@ -35,10 +35,15 @@ namespace Project0.Logic
                 throw new OrderException($"[!] {product} of quantity {qty} item too large");
             }
         }
+        private void ValidateDecrementStock(Product product, int qty)
+        {
+            StoreLocation.DecrementStock(product, qty);
+        }
         public void AddLineItem(Product product, int qty)
         {
             ValidateEnoughLines();
             ValidateItemNotTooLarge(product, qty);
+            ValidateDecrementStock(product, qty);
             LineItems.Add(product, qty);
         }
 
