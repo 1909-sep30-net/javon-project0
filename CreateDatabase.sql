@@ -2,15 +2,15 @@
 -- Create manually in Azure
 
 -- DROP all previous tables
-DROP TABLE TThreeTeas.Product;
-DROP TABLE TThreeTeas.Location;
-DROP TABLE TThreeTeas.Inventory;
-DROP TABLE TThreeTeas.Customer;
-DROP TABLE TThreeTeas.Order;
-DROP TABLE TThreeTeas.LineItem;
+DROP TABLE Product;
+DROP TABLE Location;
+DROP TABLE Inventory;
+DROP TABLE Customer;
+DROP TABLE Orders;
+DROP TABLE LineItem;
 
 -- CREATE TABLE Product
-CREATE TABLE TThreeTeas.Product (
+CREATE TABLE Product (
 	ID INT IDENTITY(1,1),
 	Name NVARCHAR(255) NOT NULL,
 	Price MONEY NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE TThreeTeas.Product (
 	CONSTRAINT CHK_Price_Nonnegative CHECK (Price > 0)
 );
 -- CREATE TABLE Location
-CREATE TABLE TThreeTeas.Location (
+CREATE TABLE Location (
 	ID INT IDENTITY(1,1),
 	Address NVARCHAR(255) NOT NULL,
 	City NVARCHAR(255) NOT NULL,
@@ -29,38 +29,38 @@ CREATE TABLE TThreeTeas.Location (
 	CONSTRAINT CHK_State_CorrectLength CHECK (LEN(State) = 2)
 );
 -- CREATE TABLE Inventory
-CREATE TABLE TThreeTeas.Inventory (
+CREATE TABLE Inventory (
 	LocationID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Stock INT NOT NULL,
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES TThreeTeas.Location(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID),
+	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
 	CONSTRAINT CHK_Stock_Nonnegative CHECK (Stock >= 0)
 );
 -- CREATE TABLE Customer
-CREATE TABLE TThreeTeas.Customer (
+CREATE TABLE Customer (
 	ID INT IDENTITY(1,1),
 	FirstName NVARCHAR(255) NOT NULL,
 	LastName NVARCHAR (255) NOT NULL,
 	CONSTRAINT PK_Customer_ID PRIMARY KEY (ID)
 );
--- CREATE TABLE Order
-CREATE TABLE TThreeTeas.Order (
+-- CREATE TABLE Orders
+CREATE TABLE Orders (
 	ID INT IDENTITY(1,1),
 	LocationID INT NOT NULL,
 	CustomerID INT NOT NULL,
 	OrderTime DATETIME NOT NULL,
-	CONSTRAINT PK_Order_ID PRIMARY KEY (ID),
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES TThreeTeas.Location(ID),
-	CONSTRAINT FK_CustomerID_Customer_ID FOREIGN KEY (CustomerID) REFERENCES TThreeTeas.Customer(ID)
+	CONSTRAINT PK_Orders_ID PRIMARY KEY (ID),
+	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
+	CONSTRAINT FK_CustomerID_Customer_ID FOREIGN KEY (CustomerID) REFERENCES Customer(ID)
 );
 -- CREATE TABLE LineItem
-CREATE TABLE TThreeTeas.LineItem (
-	OrderID INT NOT NULL,
+CREATE TABLE LineItem (
+	OrdersID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
-	CONSTRAINT FK_OrderID_Order_ID FOREIGN KEY (OrderID) REFERENCES TThreeTeas.Order(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID),
+	CONSTRAINT FK_OrdersID_Orders_ID FOREIGN KEY (OrdersID) REFERENCES Orders(ID),
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
 	CONSTRAINT CHK_Quantity_Nonnegative CHECK (Quantity > 0)
 );
 
