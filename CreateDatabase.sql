@@ -12,18 +12,21 @@ DROP TABLE TThreeTeas.LineItem;
 -- CREATE TABLE Product
 CREATE TABLE TThreeTeas.Product (
 	ID INT IDENTITY(1,1),
-	Name VARCHAR(255) NOT NULL,
+	Name NVARCHAR(255) NOT NULL,
 	Price MONEY NOT NULL,
-	CONSTRAINT PK_Product_ID PRIMARY KEY (ID)
+	CONSTRAINT PK_Product_ID PRIMARY KEY (ID),
+	CONSTRAINT CHK_Price_Nonnegative CHECK (Price > 0)
 );
 -- CREATE TABLE Location
 CREATE TABLE TThreeTeas.Location (
 	ID INT IDENTITY(1,1),
-	Address VARCHAR(255) NOT NULL,
-	City VARCHAR(255) NOT NULL,
-	Zipcode INT NOT NULL,
-	State VARCHAR(2) NOT NULL,
-	CONSTRAINT PK_Location_ID PRIMARY KEY (ID)
+	Address NVARCHAR(255) NOT NULL,
+	City NVARCHAR(255) NOT NULL,
+	Zipcode NVARCHAR(9) NOT NULL,
+	State NVARCHAR(2) NOT NULL,
+	CONSTRAINT PK_Location_ID PRIMARY KEY (ID),
+	CONSTRAINT CHK_Zipcode_CorrectDigits CHECK (LEN(Zipcode) = 5 OR LEN(Zipcode) = 9),
+	CONSTRAINT CHK_State_CorrectLength CHECK (LEN(State) = 2)
 );
 -- CREATE TABLE Inventory
 CREATE TABLE TThreeTeas.Inventory (
@@ -31,13 +34,14 @@ CREATE TABLE TThreeTeas.Inventory (
 	ProductID INT NOT NULL,
 	Stock INT NOT NULL,
 	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES TThreeTeas.Location(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID)
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID),
+	CONSTRAINT CHK_Stock_Nonnegative CHECK (Stock >= 0)
 );
 -- CREATE TABLE Customer
 CREATE TABLE TThreeTeas.Customer (
 	ID INT IDENTITY(1,1),
-	FirstName VARCHAR(255) NOT NULL,
-	LastName VARCHAR (255) NOT NULL,
+	FirstName NVARCHAR(255) NOT NULL,
+	LastName NVARCHAR (255) NOT NULL,
 	CONSTRAINT PK_Customer_ID PRIMARY KEY (ID)
 );
 -- CREATE TABLE Order
@@ -56,7 +60,8 @@ CREATE TABLE TThreeTeas.LineItem (
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
 	CONSTRAINT FK_OrderID_Order_ID FOREIGN KEY (OrderID) REFERENCES TThreeTeas.Order(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID)
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID),
+	CONSTRAINT CHK_Quantity_Nonnegative CHECK (Quantity > 0)
 );
 
 -- INSERT INTO Products
