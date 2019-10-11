@@ -70,7 +70,7 @@ CREATE TABLE LineItem (
 );
 
 -- INSERT INTO Products
-INSERT INTO TThreeTeas.Product (Name, Price) VALUES
+INSERT INTO Product (Name, Price) VALUES
 	('Butterscotch', 20.56),
 	('Dark Chocolate Peppermint', 15.78),
 	('White Winter Chai', 9.78),
@@ -79,13 +79,13 @@ INSERT INTO TThreeTeas.Product (Name, Price) VALUES
 	('Jasmine Ancient Beauty Tea', 30.12);
 
 -- INSERT INTO Locations
-INSERT INTO TThreeTeas.Location (Address, City, Zipcode, State) VALUES
+INSERT INTO Location (Address, City, Zipcode, State) VALUES
 	('8 Winding Street', 'Hilly Glory', 71550, 'AK'),
 	('32 Bull', 'Ranch Plaza', 90235, 'LA'),
 	('192 Main', 'Shining Beacon', 89567, 'SD');
 
 -- INSERT INTO Inventories for each Location
-INSERT INTO TThreeTeas.Inventory (LocationID, ProductID, Stock) VALUES
+INSERT INTO Inventory (LocationID, ProductID, Stock) VALUES
 	(1, 3, 4),
 	(1, 4, 11),
 	(1, 6, 21),
@@ -98,7 +98,7 @@ INSERT INTO TThreeTeas.Inventory (LocationID, ProductID, Stock) VALUES
 	(3, 6, 12);
 
 -- INSERT INTO Customers
-INSERT INTO TThreeTeas.Customer (FirstName, LastName) VALUES
+INSERT INTO Customer (FirstName, LastName) VALUES
 	('Javon', 'Negahban'),
 	('Ojan', 'Negahban'),
 	('Henry', 'Ford'),
@@ -106,7 +106,7 @@ INSERT INTO TThreeTeas.Customer (FirstName, LastName) VALUES
 	('Lucy', 'Shepherd');
 
 -- INSERT INTO Orders
-INSERT INTO TThreeTeas.Order (LocationID, CustomerID, OrderTime) VALUES
+INSERT INTO Orders (LocationID, CustomerID, OrderTime) VALUES
 	(2, 3, DATEADD(hh, -5, GETDATE())),
 	(3, 4, DATEADD(hh, -20, GETDATE())),
 	(1, 2, DATEADD(hh, -2, GETDATE())),
@@ -114,7 +114,7 @@ INSERT INTO TThreeTeas.Order (LocationID, CustomerID, OrderTime) VALUES
 	(1, 1, DATEADD(hh, -11, GETDATE()));
 
 -- INSERT INTO LineItems for each Order
-INSERT INTO TThreeTeas.LineItem (OrderID, ProductID, Quantity) VALUES
+INSERT INTO LineItem (OrderID, ProductID, Quantity) VALUES
 	(1, 2, 1),
 	(2, 1, 4),
 	(2, 3, 1),
