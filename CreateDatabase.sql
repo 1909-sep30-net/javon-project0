@@ -114,7 +114,7 @@ INSERT INTO Orders (LocationID, CustomerID, OrderTime) VALUES
 	(1, 1, DATEADD(hh, -11, GETDATE()));
 
 -- INSERT INTO LineItems for each Order
-INSERT INTO LineItem (OrderID, ProductID, Quantity) VALUES
+INSERT INTO LineItem (OrdersID, ProductID, Quantity) VALUES
 	(1, 2, 1),
 	(2, 1, 4),
 	(2, 3, 1),
