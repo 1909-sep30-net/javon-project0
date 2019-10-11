@@ -75,7 +75,8 @@ namespace Project0.Data
                 State = USState.LA
             };
             loc2.AddProduct(prd2, 8);
-            loc2.AddProduct(prd5, 1);
+            loc2.AddProduct(prd3, 14);
+            loc2.AddProduct(prd5, 6);
 
             Location loc3 = new Location()
             {
@@ -87,8 +88,8 @@ namespace Project0.Data
             };
             loc3.AddProduct(prd1, 6);
             loc3.AddProduct(prd3, 15);
-            loc3.AddProduct(prd5, 1);
-            loc3.AddProduct(prd6, 2);
+            loc3.AddProduct(prd5, 7);
+            loc3.AddProduct(prd6, 12);
 
             Customer cst1 = new Customer()
             {
@@ -141,7 +142,7 @@ namespace Project0.Data
                 Customer = cst4,
                 OrderDateTime = DateTime.Now.AddHours(-20)
             };
-            ord2.AddLineItem(prd1, 2);
+            ord2.AddLineItem(prd1, 4);
             ord2.AddLineItem(prd3, 1);
 
             Order ord3 = new Order()
@@ -171,8 +172,8 @@ namespace Project0.Data
                 Customer = cst1,
                 OrderDateTime = DateTime.Now.AddHours(-11)
             };
-            ord5.AddLineItem(prd2, 5);
-            ord5.AddLineItem(prd1, 7);
+            ord5.AddLineItem(prd4, 5);
+            ord5.AddLineItem(prd6, 3);
 
             Products = new List<Product>() { prd1, prd2, prd3, prd4, prd5, prd6 };
             Locations = new List<Location>() { loc1, loc2, loc3 };
