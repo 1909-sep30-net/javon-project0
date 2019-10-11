@@ -17,6 +17,7 @@ CREATE TABLE Product (
 	CONSTRAINT PK_Product_ID PRIMARY KEY (ID),
 	CONSTRAINT CHK_Price_Nonnegative CHECK (Price > 0)
 );
+
 -- CREATE TABLE Location
 CREATE TABLE Location (
 	ID INT IDENTITY(1,1),
@@ -28,15 +29,17 @@ CREATE TABLE Location (
 	CONSTRAINT CHK_Zipcode_CorrectDigits CHECK (LEN(Zipcode) = 5 OR LEN(Zipcode) = 9),
 	CONSTRAINT CHK_State_CorrectLength CHECK (LEN(State) = 2)
 );
+
 -- CREATE TABLE Inventory
 CREATE TABLE Inventory (
 	LocationID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Stock INT NOT NULL,
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
+	CONSTRAINT FK_Inventory_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
+	CONSTRAINT FK_Inventory_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
 	CONSTRAINT CHK_Stock_Nonnegative CHECK (Stock >= 0)
 );
+
 -- CREATE TABLE Customer
 CREATE TABLE Customer (
 	ID INT IDENTITY(1,1),
@@ -44,6 +47,7 @@ CREATE TABLE Customer (
 	LastName NVARCHAR (255) NOT NULL,
 	CONSTRAINT PK_Customer_ID PRIMARY KEY (ID)
 );
+
 -- CREATE TABLE Orders
 CREATE TABLE Orders (
 	ID INT IDENTITY(1,1),
@@ -51,16 +55,17 @@ CREATE TABLE Orders (
 	CustomerID INT NOT NULL,
 	OrderTime DATETIME NOT NULL,
 	CONSTRAINT PK_Orders_ID PRIMARY KEY (ID),
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
-	CONSTRAINT FK_CustomerID_Customer_ID FOREIGN KEY (CustomerID) REFERENCES Customer(ID)
+	CONSTRAINT FK_Orders_Location_ID FOREIGN KEY (LocationID) REFERENCES Location(ID),
+	CONSTRAINT FK_Orders_Customer_ID FOREIGN KEY (CustomerID) REFERENCES Customer(ID)
 );
+
 -- CREATE TABLE LineItem
 CREATE TABLE LineItem (
 	OrdersID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
-	CONSTRAINT FK_OrdersID_Orders_ID FOREIGN KEY (OrdersID) REFERENCES Orders(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
+	CONSTRAINT FK_LineItem_Orders_ID FOREIGN KEY (OrdersID) REFERENCES Orders(ID),
+	CONSTRAINT FK_LineItem_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
 	CONSTRAINT CHK_Quantity_Nonnegative CHECK (Quantity > 0)
 );
 
