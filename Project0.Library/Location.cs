@@ -70,6 +70,15 @@ namespace Project0.Logic
 
         internal void DecrementStock(Product product, int qty)
         {
+            if (inventory.ContainsKey(product))
+            {
+                throw new LocationException($"[!] Location does not have {product} in stock");
+            }
+
+            if (inventory[product] < qty)
+            {
+                throw new LocationException($"[!] Location does not have {product} with {qty} stock, only has {inventory[product]} in stock");
+            }
             inventory[product] -= qty;
         }
     }
