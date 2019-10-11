@@ -30,8 +30,8 @@ CREATE TABLE TThreeTeas.Inventory (
 	LocationID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Stock INT NOT NULL,
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY REFERENCES TThreeTeas.Location(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY REFERENCES TThreeTeas.Product(ID)
+	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES TThreeTeas.Location(ID),
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID)
 );
 -- CREATE TABLE Customer
 CREATE TABLE TThreeTeas.Customer (
@@ -47,16 +47,16 @@ CREATE TABLE TThreeTeas.Order (
 	CustomerID INT NOT NULL,
 	OrderTime DATETIME NOT NULL,
 	CONSTRAINT PK_Order_ID PRIMARY KEY (ID),
-	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY REFERENCES TThreeTeas.Location(ID),
-	CONSTRAINT FK_CustomerID_Customer_ID FOREIGN KEY REFERENCES TThreeTeas.Customer(ID)
+	CONSTRAINT FK_LocationID_Location_ID FOREIGN KEY (LocationID) REFERENCES TThreeTeas.Location(ID),
+	CONSTRAINT FK_CustomerID_Customer_ID FOREIGN KEY (CustomerID) REFERENCES TThreeTeas.Customer(ID)
 );
 -- CREATE TABLE LineItem
 CREATE TABLE TThreeTeas.LineItem (
 	OrderID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
-	CONSTRAINT FK_OrderID_Order_ID FOREIGN KEY REFERENCES TThreeTeas.Order(ID),
-	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY REFERENCES TThreeTeas.Product(ID)
+	CONSTRAINT FK_OrderID_Order_ID FOREIGN KEY (OrderID) REFERENCES TThreeTeas.Order(ID),
+	CONSTRAINT FK_ProductID_Product_ID FOREIGN KEY (ProductID) REFERENCES TThreeTeas.Product(ID)
 );
 
 -- INSERT INTO Products
