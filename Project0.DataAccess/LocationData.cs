@@ -1,7 +1,7 @@
-﻿//using Project0.Logic;
+﻿//using Project0.BusinessLogic;
 //using System.Collections.Generic;
 
-//namespace Project0.Data
+//namespace Project0.DataAccess
 //{
 //    public static class LocationData
 //    {

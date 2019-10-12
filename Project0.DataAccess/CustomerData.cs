@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Project0.Data.Entities;
-using Project0.Logic;
+using Project0.DataAccess.Entities;
+using Project0.BusinessLogic;
 using System.Collections.Generic;
 
-namespace Project0.Data
+namespace Project0.DataAccess
 {
     public static class CustomerData
     {
@@ -31,7 +31,8 @@ namespace Project0.Data
             {
                 if (c.LastName.ToLower() == customer.LastName.ToLower())
                 {
-                    customersWithLastName.Add(new BusinessCustomer() {
+                    customersWithLastName.Add(new BusinessCustomer()
+                    {
                         Id = c.Id,
                         FirstName = c.FirstName,
                         LastName = c.LastName

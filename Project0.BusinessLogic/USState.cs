@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Project0.Logic
+namespace Project0.BusinessLogic
 {
     // State codes from source: https://gist.github.com/jabez007/4f15496af540a68fdb3449cd928cfc6b
     public enum USState

@@ -1,5 +1,5 @@
-﻿using Project0.Data;
-using Project0.Logic;
+﻿using Project0.DataAccess;
+using Project0.BusinessLogic;
 using System;
 using System.Collections.Generic;
 

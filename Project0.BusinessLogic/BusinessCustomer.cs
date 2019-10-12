@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Project0.Logic
+namespace Project0.BusinessLogic
 {
     public class BusinessCustomer
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Project0.Data.Entities
+namespace Project0.DataAccess.Entities
 {
     public partial class Customer
     {

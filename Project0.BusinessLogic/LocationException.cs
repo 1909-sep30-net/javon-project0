@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Project0.Logic
+namespace Project0.BusinessLogic
 {
     public class LocationException : Exception 
     {
