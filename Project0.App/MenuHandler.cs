@@ -9,8 +9,8 @@ namespace Project0.App
     {
         internal static void HandleRequest(MenuRequest req)
         {
-            //if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
-            /*else*/if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
+            if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
+            else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
             //else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
@@ -19,28 +19,28 @@ namespace Project0.App
             else HandleRequestInvalid();
         }
 
-        //private static void HandleRequestAddCustomer()
-        //{
-        //    try
-        //    {
-        //        Customer cust = new Customer();
+        private static void HandleRequestAddCustomer()
+        {
+            try
+            {
+                BusinessCustomer cust = new BusinessCustomer();
 
-        //        Console.WriteLine("[?] What is the first name of the customer");
-        //        string firstName = Console.ReadLine();
-        //        cust.FirstName = firstName;
+                Console.WriteLine("[?] What is the first name of the customer");
+                string firstName = Console.ReadLine();
+                cust.FirstName = firstName;
 
-        //        Console.WriteLine("[?] What is the last name of the customer");
-        //        string lastName = Console.ReadLine();
-        //        cust.LastName = lastName;
+                Console.WriteLine("[?] What is the last name of the customer");
+                string lastName = Console.ReadLine();
+                cust.LastName = lastName;
 
-        //        CustomerData.AddCustomer(cust);
-        //        Console.WriteLine($"[+] The customer {cust.FirstName} {cust.LastName} has been added");
-        //    }
-        //    catch (CustomerException ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //}
+                CustomerData.AddCustomer(cust);
+                Console.WriteLine($"[+] The customer {cust.FirstName} {cust.LastName} has been added\n");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
         private static void HandleRequestSearchCustomer()
         {

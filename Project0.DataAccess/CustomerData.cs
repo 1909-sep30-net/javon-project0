@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Project0.DataAccess.Entities;
 using Project0.BusinessLogic;
+using Project0.DataAccess.Entities;
 using System.Collections.Generic;
 
 namespace Project0.DataAccess
@@ -13,10 +13,22 @@ namespace Project0.DataAccess
             builder.AddConsole();
         });
 
-        //public static void AddCustomer(Customer cust)
-        //{
-        //    MemoryStore.Customers.Add(cust);
-        //}
+        public static void AddCustomer(BusinessCustomer cust)
+        {
+            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
+                .UseSqlServer(SecretConfiguration.ConnectionString)
+                .UseLoggerFactory(AppLoggerFactory)
+                .Options;
+            using var context = new TThreeTeasContext(options);
+
+            Customer newCustomer = new Customer()
+            {
+                FirstName = cust.FirstName,
+                LastName = cust.LastName
+            };
+            context.Customer.Add(newCustomer);
+            context.SaveChanges();
+        }
 
         public static ICollection<BusinessCustomer> GetCustomersByLastName(BusinessCustomer customer)
         {
