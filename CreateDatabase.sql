@@ -65,6 +65,7 @@ CREATE TABLE LineItem (
 	OrdersID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
+	CONSTRAINT PK_LineItem PRIMARY KEY (OrdersID, ProductID),
 	CONSTRAINT FK_LineItem_Orders_ID FOREIGN KEY (OrdersID) REFERENCES Orders(ID),
 	CONSTRAINT FK_LineItem_Product_ID FOREIGN KEY (ProductID) REFERENCES Product(ID),
 	CONSTRAINT CHK_Quantity_Nonnegative CHECK (Quantity > 0)
