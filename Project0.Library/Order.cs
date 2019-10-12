@@ -9,7 +9,7 @@ namespace Project0.Logic
         private const int maxLines = 50;
         public int Id { get; set; }
         public Location StoreLocation { get; set; }
-        public Customer Customer { get; set; }
+        public BusinessCustomer Customer { get; set; }
         public DateTime OrderDateTime { get; set; }
         public Dictionary<Product, int> LineItems { get; set; } = new Dictionary<Product, int>();
         public double Total
