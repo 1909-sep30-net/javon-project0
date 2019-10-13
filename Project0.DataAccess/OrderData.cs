@@ -8,7 +8,7 @@ namespace Project0.DataAccess
 {
     public static class OrderData
     {
-        public static BusinessOrder GetOrderById(int id)
+        public static BusinessOrder GetOrderDetailsById(int id)
         {
             DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
                 .UseSqlServer(SecretConfiguration.ConnectionString)
@@ -76,7 +76,7 @@ namespace Project0.DataAccess
 
             return bOrder;
         }
-        public static ICollection<BusinessOrder> GetOrdersByLocation(int lId)
+        public static ICollection<BusinessOrder> GetOrdersByLocationId(int lId)
         {
             DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
                 .UseSqlServer(SecretConfiguration.ConnectionString)
@@ -88,21 +88,25 @@ namespace Project0.DataAccess
             List<Orders> orders = context.Orders.Where(o => o.LocationId == lId).ToList();
             foreach (Orders o in orders)
             {
-                bOrders.Add(GetOrderById(o.Id));
+                bOrders.Add(GetOrderDetailsById(o.Id));
             }
             return bOrders;
         }
-        //public static List<Order> GetOrdersByCustomer(int cId)
-        //{
-        //    List<Order> orders = new List<Order>();
-        //    foreach (Order ord in MemoryStore.Orders)
-        //    {
-        //        if (ord.Customer.Id == cId)
-        //        {
-        //            orders.Add(ord);
-        //        }
-        //    }
-        //    return orders;
-        //}
+        public static ICollection<BusinessOrder> GetOrdersByCustomerId(int cId)
+        {
+            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
+                .UseSqlServer(SecretConfiguration.ConnectionString)
+                .UseLoggerFactory(CustomerData.AppLoggerFactory)
+                .Options;
+            using var context = new TThreeTeasContext(options);
+
+            List<BusinessOrder> bOrders = new List<BusinessOrder>();
+            List<Orders> orders = context.Orders.Where(o => o.CustomerId == cId).ToList();
+            foreach (Orders o in orders)
+            {
+                bOrders.Add(GetOrderDetailsById(o.Id));
+            }
+            return bOrders;
+        }
     }
 }

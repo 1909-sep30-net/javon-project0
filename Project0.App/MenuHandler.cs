@@ -13,7 +13,7 @@ namespace Project0.App
             else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
             else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
             else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
-            //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
             else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
             else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
             else HandleRequestInvalid();
@@ -74,7 +74,7 @@ namespace Project0.App
             int orderId;
             if (Int32.TryParse(inputOrderId, out orderId))
             {
-                BusinessOrder order = OrderData.GetOrderById(orderId);
+                BusinessOrder order = OrderData.GetOrderDetailsById(orderId);
                 if (order != null)
                 {
                     Console.WriteLine(order);
@@ -97,13 +97,13 @@ namespace Project0.App
             int lId;
             if (Int32.TryParse(locationId, out lId))
             {
-                if (LocationData.LocationExists(lId))
+                if (LocationData.LocationExistsById(lId))
                 {
-                    ICollection<BusinessOrder> ordersWithLocation = OrderData.GetOrdersByLocation(lId);
+                    ICollection<BusinessOrder> ordersWithLocation = OrderData.GetOrdersByLocationId(lId);
                     Console.WriteLine($"[*] There are {ordersWithLocation.Count} orders for location {lId}");
-                    foreach (BusinessOrder ord in ordersWithLocation)
+                    foreach (BusinessOrder o in ordersWithLocation)
                     {
-                        Console.WriteLine(ord);
+                        Console.WriteLine(o);
                     }
                     Console.WriteLine();
                 }
@@ -118,24 +118,33 @@ namespace Project0.App
             }
         }
 
-        //private static void HandleRequestDisplayOrderHistoryOfCustomer()
-        //{
-        //    Console.WriteLine("[?] What is the customer ID");
-        //    string customerId = Console.ReadLine();
-        //    int cId;
-        //    if(Int32.TryParse(customerId, out cId))
-        //    {
-        //        List<Order> ordersWithCustomer = OrderData.GetOrdersByCustomer(cId);
-        //        foreach (Order ord in ordersWithCustomer)
-        //        {
-        //            Console.WriteLine(ord);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("[!] Input is not an integer");
-        //    }
-        //}
+        private static void HandleRequestDisplayOrderHistoryOfCustomer()
+        {
+            Console.WriteLine("[?] What is the customer ID");
+            string customerId = Console.ReadLine();
+            int cId;
+            if (Int32.TryParse(customerId, out cId))
+            {
+                if (CustomerData.CustomerExistsById(cId))
+                {
+                    ICollection<BusinessOrder> ordersWithCustomer = OrderData.GetOrdersByCustomerId(cId);
+                    Console.WriteLine($"[*] There are {ordersWithCustomer.Count} orders for customer {cId}");
+                    foreach (BusinessOrder o in ordersWithCustomer)
+                    {
+                        Console.WriteLine(o);
+                    }
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine($"[!] Customer {cId} does not exist\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("[!] Input is not an integer\n");
+            }
+        }
 
         private static void HandleRequestDisplayAllLocations()
         {

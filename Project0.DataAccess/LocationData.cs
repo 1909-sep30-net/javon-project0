@@ -32,7 +32,7 @@ namespace Project0.DataAccess
             return bLocations;
         }
 
-        public static bool LocationExists(int lId)
+        public static bool LocationExistsById(int lId)
         {
             DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
                 .UseSqlServer(SecretConfiguration.ConnectionString)

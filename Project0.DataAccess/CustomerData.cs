@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Logging;
 using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project0.DataAccess
 {
@@ -52,6 +54,18 @@ namespace Project0.DataAccess
                 }
             }
             return customersWithLastName;
+        }
+
+        public static bool CustomerExistsById(int cId)
+        {
+            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
+                .UseSqlServer(SecretConfiguration.ConnectionString)
+                .UseLoggerFactory(CustomerData.AppLoggerFactory)
+                .Options;
+            using var context = new TThreeTeasContext(options);
+
+            Customer customer = context.Customer.Where(c => c.Id == cId).FirstOrDefault();
+            return !(customer is null);
         }
     }
 }
