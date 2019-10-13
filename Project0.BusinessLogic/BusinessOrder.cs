@@ -59,7 +59,7 @@ namespace Project0.BusinessLogic
                 body += $"{li.Key} [Quantity] {li.Value}\n";
             }
             String footer = $"Sale Total: ${Total}";
-            return $"{header}{body}{footer}\n";
+            return $"{header}{body}{footer}";
         }
     }
 }

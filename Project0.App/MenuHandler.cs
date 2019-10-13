@@ -14,7 +14,7 @@ namespace Project0.App
             else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
-            //else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
+            else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
             else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
             else HandleRequestInvalid();
         }
@@ -38,7 +38,7 @@ namespace Project0.App
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"{ex.Message}\n");
             }
         }
 
@@ -53,12 +53,12 @@ namespace Project0.App
                 cust.LastName = lastName;
 
                 ICollection<BusinessCustomer> customersWithLastName = CustomerData.GetCustomersByLastName(cust);
-                Console.WriteLine($"[*] There are {customersWithLastName.Count} customers with last name \"{lastName}\"");
+                Console.WriteLine($"[*] There are {customersWithLastName.Count} customers with the last name \"{lastName}\"");
                 foreach (BusinessCustomer c in customersWithLastName)
                 {
                     Console.WriteLine(c);
                 }
-                Console.WriteLine("\n");
+                Console.WriteLine();
             }
             catch (Exception ex)
             {
@@ -128,15 +128,16 @@ namespace Project0.App
         //    }
         //}
 
-        //private static void HandleRequestDisplayAllLocations()
-        //{
-        //    List<Location> locations = LocationData.GetLocations();
-        //    Console.WriteLine("[*] Locations");
-        //    foreach (Location loc in locations)
-        //    {
-        //        Console.WriteLine(loc);
-        //    }
-        //}
+        private static void HandleRequestDisplayAllLocations()
+        {
+            ICollection<BusinessLocation> locations = LocationData.GetLocations();
+            Console.WriteLine($"[*] There are {locations.Count} locations");
+            foreach (BusinessLocation loc in locations)
+            {
+                Console.WriteLine(loc);
+            }
+            Console.WriteLine();
+        }
 
         private static void HandleRequestExit()
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Project0.BusinessLogic
 {
@@ -18,14 +17,7 @@ namespace Project0.BusinessLogic
 
         public override string ToString()
         {
-            String str = $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}\n" +
-                   $"[Inventory]\n";
-            foreach (var stock in inventory)
-            {
-                str += $"{stock.Key} [Quantity] {stock.Value}\n";
-            }
-
-            return str;
+            return $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}";
         }
 
         internal void DecrementStock(BusinessProduct product, int qty)
