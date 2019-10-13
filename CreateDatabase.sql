@@ -126,3 +126,11 @@ INSERT INTO LineItem (OrdersID, ProductID, Quantity) VALUES
 	(4, 1, 1),
 	(5, 4, 5),
 	(5, 6, 3);
+
+-- SELECT tables for debugging
+SELECT * FROM Orders;
+SELECT * FROM Location;
+SELECT * FROM Inventory;
+SELECT * FROM Product;
+SELECT * FROM Customer;
+SELECT * FROM LineItem;

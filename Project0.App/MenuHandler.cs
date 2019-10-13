@@ -11,7 +11,7 @@ namespace Project0.App
         {
             if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
             else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
-            //else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
+            else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
             //else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
@@ -67,28 +67,28 @@ namespace Project0.App
 
         }
 
-        //private static void HandleRequestDisplayDetailsOfOrder()
-        //{
-        //    Console.WriteLine("[?] What is the order ID");
-        //    string orderId = Console.ReadLine();
-        //    int oId;
-        //    if (Int32.TryParse(orderId, out oId))
-        //    {
-        //        Order order = OrderData.GetOrderById(oId);
-        //        if (order != null)
-        //        {
-        //            Console.WriteLine(order);
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("[!] Order does not exist in the database");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("[!] Input is not an integer");
-        //    }
-        //}
+        private static void HandleRequestDisplayDetailsOfOrder()
+        {
+            Console.WriteLine("[?] What is the order ID");
+            string inputOrderId = Console.ReadLine();
+            int orderId;
+            if (Int32.TryParse(inputOrderId, out orderId))
+            {
+                BusinessOrder order = OrderData.GetOrderById(orderId);
+                if (order != null)
+                {
+                    Console.WriteLine(order);
+                }
+                else
+                {
+                    Console.WriteLine("[!] Order does not exist in the database\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("[!] Input is not an integer\n");
+            }
+        }
 
         //private static void HandleRequestDisplayOrderHistoryOfLocation()
         //{

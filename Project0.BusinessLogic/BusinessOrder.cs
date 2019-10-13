@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace Project0.BusinessLogic
 {
-    public class Order
+    public class BusinessOrder
     {
         private const int maxQtySize = 20;
         private const int maxLines = 50;
         public int Id { get; set; }
-        public Location StoreLocation { get; set; }
+        public BusinessLocation StoreLocation { get; set; }
         public BusinessCustomer Customer { get; set; }
-        public DateTime OrderDateTime { get; set; }
-        public Dictionary<Product, int> LineItems { get; set; } = new Dictionary<Product, int>();
-        public double Total
+        public DateTime OrderTime { get; set; }
+        public Dictionary<BusinessProduct, int> LineItems { get; set; } = new Dictionary<BusinessProduct, int>();
+        public decimal Total
         {
             get
             {
-                double sum = 0;
+                decimal sum = 0;
                 foreach (var li in LineItems) sum += li.Key.Price * li.Value;
                 return sum;
             }
@@ -25,25 +25,25 @@ namespace Project0.BusinessLogic
         {
             if (LineItems.Keys.Count > maxLines)
             {
-                throw new OrderException($"[!] Too many lines for this order");
+                throw new BusinessOrderException($"[!] Too many lines for this order");
             }
         }
-        private void ValidateItemNotTooLarge(Product product, int qty)
+        private void ValidateItemNotTooLarge(BusinessProduct product, int qty)
         {
             if (qty > maxQtySize)
             {
-                throw new OrderException($"[!] {product} of quantity {qty} item too large");
+                throw new BusinessOrderException($"[!] {product} of quantity {qty} item too large");
             }
         }
-        private void ValidateDecrementStock(Product product, int qty)
+        private void ValidateDecrementStock(BusinessProduct product, int qty)
         {
             StoreLocation.DecrementStock(product, qty);
         }
-        public void AddLineItem(Product product, int qty)
+        public void AddLineItem(BusinessProduct product, int qty)
         {
             ValidateEnoughLines();
             ValidateItemNotTooLarge(product, qty);
-            ValidateDecrementStock(product, qty);
+            //ValidateDecrementStock(product, qty);
             LineItems.Add(product, qty);
         }
 
@@ -52,14 +52,14 @@ namespace Project0.BusinessLogic
             String header = $"[Order {Id}]\n" +
                             $"{StoreLocation}\n" +
                             $"{Customer}\n" +
-                            $"[Datetime] {OrderDateTime}\n";
+                            $"[Datetime] {OrderTime}\n";
             String body = "";
             foreach (var li in LineItems)
             {
                 body += $"{li.Key} [Quantity] {li.Value}\n";
             }
-            String footer = $"Total: ${Total}";
-            return header + body + footer;
+            String footer = $"Sale Total: ${Total}";
+            return $"{header}{body}{footer}\n";
         }
     }
 }
