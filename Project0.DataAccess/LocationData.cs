@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project0.DataAccess
 {
@@ -28,6 +30,18 @@ namespace Project0.DataAccess
                 });
             }
             return bLocations;
+        }
+
+        public static bool LocationExists(int lId)
+        {
+            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
+                .UseSqlServer(SecretConfiguration.ConnectionString)
+                .UseLoggerFactory(CustomerData.AppLoggerFactory)
+                .Options;
+            using var context = new TThreeTeasContext(options);
+
+            Location location = context.Location.Where(l => l.Id == lId).FirstOrDefault();
+            return !(location is null);
         }
     }
 }

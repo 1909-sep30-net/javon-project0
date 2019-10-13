@@ -76,18 +76,22 @@ namespace Project0.DataAccess
 
             return bOrder;
         }
-        //public static List<Order> GetOrdersByLocation(int lId)
-        //{
-        //    List<Order> orders = new List<Order>();
-        //    foreach (Order ord in MemoryStore.Orders)
-        //    {
-        //        if (ord.StoreLocation.Id == lId)
-        //        {
-        //            orders.Add(ord);
-        //        }
-        //    }
-        //    return orders;
-        //}
+        public static ICollection<BusinessOrder> GetOrdersByLocation(int lId)
+        {
+            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
+                .UseSqlServer(SecretConfiguration.ConnectionString)
+                .UseLoggerFactory(CustomerData.AppLoggerFactory)
+                .Options;
+            using var context = new TThreeTeasContext(options);
+
+            List<BusinessOrder> bOrders = new List<BusinessOrder>();
+            List<Orders> orders = context.Orders.Where(o => o.LocationId == lId).ToList();
+            foreach (Orders o in orders)
+            {
+                bOrders.Add(GetOrderById(o.Id));
+            }
+            return bOrders;
+        }
         //public static List<Order> GetOrdersByCustomer(int cId)
         //{
         //    List<Order> orders = new List<Order>();

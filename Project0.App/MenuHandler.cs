@@ -12,7 +12,7 @@ namespace Project0.App
             if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
             else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
             else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
-            //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
             //else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
             else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
             else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
@@ -90,24 +90,33 @@ namespace Project0.App
             }
         }
 
-        //private static void HandleRequestDisplayOrderHistoryOfLocation()
-        //{
-        //    Console.WriteLine("[?] What is the location ID");
-        //    string locationId = Console.ReadLine();
-        //    int lId;
-        //    if (Int32.TryParse(locationId, out lId))
-        //    {
-        //        List<Order> ordersWithLocation = OrderData.GetOrdersByLocation(lId);
-        //        foreach (Order ord in ordersWithLocation)
-        //        {
-        //            Console.WriteLine(ord);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("[!] Input is not an integer");
-        //    }
-        //}
+        private static void HandleRequestDisplayOrderHistoryOfLocation()
+        {
+            Console.WriteLine("[?] What is the location ID");
+            string locationId = Console.ReadLine();
+            int lId;
+            if (Int32.TryParse(locationId, out lId))
+            {
+                if (LocationData.LocationExists(lId))
+                {
+                    ICollection<BusinessOrder> ordersWithLocation = OrderData.GetOrdersByLocation(lId);
+                    Console.WriteLine($"[*] There are {ordersWithLocation.Count} orders for location {lId}");
+                    foreach (BusinessOrder ord in ordersWithLocation)
+                    {
+                        Console.WriteLine(ord);
+                    }
+                    Console.WriteLine();
+                }
+                else 
+                {
+                    Console.WriteLine($"[!] Location {lId} does not exist\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("[!] Input is not an integer\n");
+            }
+        }
 
         //private static void HandleRequestDisplayOrderHistoryOfCustomer()
         //{
