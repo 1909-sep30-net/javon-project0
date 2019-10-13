@@ -2,7 +2,7 @@
 
 namespace Project0.BusinessLogic
 {
-    internal class BusinessOrderException : Exception
+    public class BusinessOrderException : Exception
     {
         public BusinessOrderException(string message) : base(message)
         {

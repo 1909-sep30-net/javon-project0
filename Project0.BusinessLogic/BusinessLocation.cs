@@ -10,6 +10,7 @@ namespace Project0.BusinessLogic
         public string Zipcode { get; set; }
         public string State { get; set; }
         private Dictionary<BusinessProduct, int> inventory = new Dictionary<BusinessProduct, int>();
+
         public void AddProduct(BusinessProduct product, int stock)
         {
             inventory.Add(product, stock);

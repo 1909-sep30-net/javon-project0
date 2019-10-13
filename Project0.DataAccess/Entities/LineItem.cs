@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Project0.DataAccess.Entities
+﻿namespace Project0.DataAccess.Entities
 {
     public partial class LineItem
     {

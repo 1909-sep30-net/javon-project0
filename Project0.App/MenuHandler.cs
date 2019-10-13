@@ -1,22 +1,140 @@
-﻿using Project0.DataAccess;
-using Project0.BusinessLogic;
+﻿using Project0.BusinessLogic;
+using Project0.DataAccess;
 using System;
 using System.Collections.Generic;
 
 namespace Project0.App
 {
-    class MenuHandler
+    internal class MenuHandler
     {
         internal static void HandleRequest(MenuRequest req)
         {
-            if (req.Equals(MenuRequest.AddCustomer)) HandleRequestAddCustomer();
-            else if (req.Equals(MenuRequest.SearchCustomer)) HandleRequestSearchCustomer();
-            else if (req.Equals(MenuRequest.DisplayDetailsOfOrder)) HandleRequestDisplayDetailsOfOrder();
-            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation)) HandleRequestDisplayOrderHistoryOfLocation();
-            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer)) HandleRequestDisplayOrderHistoryOfCustomer();
-            else if (req.Equals(MenuRequest.DisplayAllLocations)) HandleRequestDisplayAllLocations();
-            else if (req.Equals(MenuRequest.Exit)) HandleRequestExit();
-            else HandleRequestInvalid();
+            if (req.Equals(MenuRequest.PlaceOrder))
+            {
+                HandleRequestPlaceOrder();
+            }
+            else if (req.Equals(MenuRequest.AddCustomer))
+            {
+                HandleRequestAddCustomer();
+            }
+            else if (req.Equals(MenuRequest.SearchCustomer))
+            {
+                HandleRequestSearchCustomer();
+            }
+            else if (req.Equals(MenuRequest.DisplayDetailsOfOrder))
+            {
+                HandleRequestDisplayDetailsOfOrder();
+            }
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfLocation))
+            {
+                HandleRequestDisplayOrderHistoryOfLocation();
+            }
+            else if (req.Equals(MenuRequest.DisplayOrderHistoryOfCustomer))
+            {
+                HandleRequestDisplayOrderHistoryOfCustomer();
+            }
+            else if (req.Equals(MenuRequest.DisplayAllLocations))
+            {
+                HandleRequestDisplayAllLocations();
+            }
+            else if (req.Equals(MenuRequest.Exit))
+            {
+                HandleRequestExit();
+            }
+            else
+            {
+                HandleRequestInvalid();
+            }
+        }
+
+        private static void HandleRequestPlaceOrder()
+        {
+            try
+            {
+                int customerId;
+                int locationId;
+                int dummy;
+                int line = 0;
+                Dictionary<int, int> lineItemsParsed = new Dictionary<int, int>();
+                Dictionary<BusinessProduct, int> lineItems = new Dictionary<BusinessProduct, int>();
+
+                Console.WriteLine("[?] What is the customer ID");
+                string inputCustomerId = Console.ReadLine();
+                if (!Int32.TryParse(inputCustomerId, out customerId))
+                {
+                    throw new FormatException($"[!] Input for customer ID is not an integer\n");
+                }
+
+                Console.WriteLine("[?] What is the location ID");
+                string inputLocationId = Console.ReadLine();
+                if (!Int32.TryParse(inputLocationId, out locationId))
+                {
+                    throw new FormatException($"[!] Input for location ID is not an integer\n");
+                }
+
+                while (++line > 0)
+                {
+                    int productId;
+                    int quantity;
+
+                    Console.WriteLine($"[?] Line {line} - Enter product ID or press enter to finish your order");
+                    string inputProductId = Console.ReadLine();
+                    if (inputProductId == "")
+                    {
+                        break;
+                    }
+                    if (!Int32.TryParse(inputProductId, out productId))
+                    {
+                        throw new FormatException($"[!] Input for product ID is not an integer\n");
+                    }
+
+                    Console.WriteLine($"[?] Line {line} - Enter quantity");
+                    string inputQuantity = Console.ReadLine();
+                    if (!Int32.TryParse(inputQuantity, out quantity))
+                    {
+                        throw new FormatException($"[!] Input for quantity is not an integer\n");
+                    }
+
+                    lineItemsParsed.Add(productId, quantity);
+                }
+
+                if (!CustomerData.CustomerExistsById(customerId))
+                {
+                    throw new BusinessCustomerException($"[!] Customer does not exist\n");
+                }
+
+                if (!LocationData.LocationExistsById(locationId))
+                {
+                    throw new BusinessLocationException($"[!] Location does not exist\n");
+                }
+
+                foreach (KeyValuePair<int, int> lineItem in lineItemsParsed)
+                {
+                    if (!ProductData.ProductExistsById(lineItem.Key))
+                    {
+                        throw new BusinessProductException($"[!] Product {lineItem.Key} does not exist\n");
+                    }
+                }
+
+                BusinessCustomer bCustomer = CustomerData.GetCustomerById(customerId);
+                BusinessLocation bLocation = LocationData.GetLocationById(locationId);
+
+                BusinessOrder bOrder = new BusinessOrder()
+                {
+                    StoreLocation = bLocation,
+                    Customer = bCustomer,
+                    OrderTime = DateTime.Now,
+                };
+                foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
+                {
+                    bOrder.AddLineItem(lineItem.Key, lineItem.Value);
+                }
+                OrderData.CreateOrder(bOrder);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}\n");
+            }
         }
 
         private static void HandleRequestAddCustomer()
@@ -64,7 +182,6 @@ namespace Project0.App
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         private static void HandleRequestDisplayDetailsOfOrder()
@@ -74,7 +191,7 @@ namespace Project0.App
             int orderId;
             if (Int32.TryParse(inputOrderId, out orderId))
             {
-                BusinessOrder order = OrderData.GetOrderDetailsById(orderId);
+                BusinessOrder order = OrderData.GetOrderById(orderId);
                 if (order != null)
                 {
                     Console.WriteLine(order);
@@ -86,7 +203,7 @@ namespace Project0.App
             }
             else
             {
-                Console.WriteLine("[!] Input is not an integer\n");
+                Console.WriteLine("[!] Input for order ID is not an integer\n");
             }
         }
 
@@ -107,14 +224,14 @@ namespace Project0.App
                     }
                     Console.WriteLine();
                 }
-                else 
+                else
                 {
                     Console.WriteLine($"[!] Location {lId} does not exist\n");
                 }
             }
             else
             {
-                Console.WriteLine("[!] Input is not an integer\n");
+                Console.WriteLine("[!] Input for location ID is not an integer\n");
             }
         }
 
@@ -125,7 +242,7 @@ namespace Project0.App
             int cId;
             if (Int32.TryParse(customerId, out cId))
             {
-                if (CustomerData.CustomerExistsById(cId))
+                if (!(CustomerData.GetCustomerById(cId) is null))
                 {
                     ICollection<BusinessOrder> ordersWithCustomer = OrderData.GetOrdersByCustomerId(cId);
                     Console.WriteLine($"[*] There are {ordersWithCustomer.Count} orders for customer {cId}");
@@ -142,7 +259,7 @@ namespace Project0.App
             }
             else
             {
-                Console.WriteLine("[!] Input is not an integer\n");
+                Console.WriteLine("[!] Input for customer ID is not an integer\n");
             }
         }
 

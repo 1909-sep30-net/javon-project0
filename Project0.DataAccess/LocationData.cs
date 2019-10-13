@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Project0.BusinessLogic;
+﻿using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,39 +7,52 @@ namespace Project0.DataAccess
 {
     public static class LocationData
     {
-        public static ICollection<BusinessLocation> GetLocations()
+        public static BusinessLocation GetLocationById(int locationId)
         {
-            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
-                .UseSqlServer(SecretConfiguration.ConnectionString)
-                .UseLoggerFactory(CustomerData.AppLoggerFactory)
-                .Options;
-            using var context = new TThreeTeasContext(options);
+            using var context = new TThreeTeasContext(SQLOptions.options);
 
-            List<BusinessLocation> bLocations = new List<BusinessLocation>();
-            foreach (Location l in context.Location)
+            Location location = context.Location.Where(l => l.Id == locationId).FirstOrDefault();
+            if (location is null)
             {
-                bLocations.Add(new BusinessLocation()
-                {
-                    Id = l.Id,
-                    Address = l.Address,
-                    City = l.City,
-                    Zipcode = l.Zipcode,
-                    State = l.State
-                });
+                return null;
             }
-            return bLocations;
+
+            BusinessLocation bLocation = new BusinessLocation()
+            {
+                Id = location.Id,
+                Address = location.Address,
+                City = location.City,
+                Zipcode = location.Zipcode,
+                State = location.State
+            };
+
+            List<Inventory> inventories = context.Inventory.Where(i => i.LocationId == location.Id).ToList();
+            foreach (Inventory inventory in inventories)
+            {
+                Product product = context.Product.Where(p => p.Id == inventory.ProductId).FirstOrDefault();
+                BusinessProduct bProduct = new BusinessProduct()
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price
+                };
+                bLocation.AddProduct(bProduct, inventory.Stock);
+            }
+
+            return bLocation;
         }
 
-        public static bool LocationExistsById(int lId)
+        public static ICollection<BusinessLocation> GetLocations()
         {
-            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
-                .UseSqlServer(SecretConfiguration.ConnectionString)
-                .UseLoggerFactory(CustomerData.AppLoggerFactory)
-                .Options;
-            using var context = new TThreeTeasContext(options);
+            using var context = new TThreeTeasContext(SQLOptions.options);
 
-            Location location = context.Location.Where(l => l.Id == lId).FirstOrDefault();
-            return !(location is null);
+            List<BusinessLocation> bLocations = new List<BusinessLocation>();
+            foreach (Location location in context.Location)
+            {
+                BusinessLocation bLocation = GetLocationById(location.Id);
+                bLocations.Add(bLocation);
+            }
+            return bLocations;
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Project0.BusinessLogic
         public BusinessCustomer Customer { get; set; }
         public DateTime OrderTime { get; set; }
         public Dictionary<BusinessProduct, int> LineItems { get; set; } = new Dictionary<BusinessProduct, int>();
+
         public decimal Total
         {
             get
@@ -21,6 +22,7 @@ namespace Project0.BusinessLogic
                 return sum;
             }
         }
+
         private void ValidateEnoughLines()
         {
             if (LineItems.Keys.Count > maxLines)
@@ -28,6 +30,7 @@ namespace Project0.BusinessLogic
                 throw new BusinessOrderException($"[!] Too many lines for this order");
             }
         }
+
         private void ValidateItemNotTooLarge(BusinessProduct product, int qty)
         {
             if (qty > maxQtySize)
@@ -35,10 +38,12 @@ namespace Project0.BusinessLogic
                 throw new BusinessOrderException($"[!] {product} of quantity {qty} item too large");
             }
         }
+
         private void ValidateDecrementStock(BusinessProduct product, int qty)
         {
             StoreLocation.DecrementStock(product, qty);
         }
+
         public void AddLineItem(BusinessProduct product, int qty)
         {
             ValidateEnoughLines();

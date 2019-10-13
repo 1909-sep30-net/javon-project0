@@ -1,8 +1,8 @@
 ﻿namespace Project0.App
 {
-    class ConsoleApp
+    internal class ConsoleApp
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             while (true)
             {

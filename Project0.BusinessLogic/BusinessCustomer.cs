@@ -6,17 +6,11 @@ namespace Project0.BusinessLogic
     public class BusinessCustomer
     {
         private const int maxNameLength = 30;
-        private int id;
         private string firstName;
         private string lastName;
-        public int Id
-        {
-            get => id;
-            set
-            {
-                id = value;
-            }
-        }
+
+        public int Id { get; set; }
+
         public string FirstName
         {
             get => firstName;
@@ -26,6 +20,7 @@ namespace Project0.BusinessLogic
                 firstName = char.ToUpper(value[0]) + value.Substring(1).ToLower();
             }
         }
+
         public string LastName
         {
             get => lastName;

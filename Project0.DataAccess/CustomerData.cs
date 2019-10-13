@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Project0.BusinessLogic;
+﻿using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,62 +7,49 @@ namespace Project0.DataAccess
 {
     public static class CustomerData
     {
-        public static readonly ILoggerFactory AppLoggerFactory = LoggerFactory.Create(builder =>
+        public static BusinessCustomer GetCustomerById(int customerId)
         {
-            builder.AddConsole();
-        });
+            using var context = new TThreeTeasContext(SQLOptions.options);
 
-        public static void AddCustomer(BusinessCustomer cust)
-        {
-            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
-                .UseSqlServer(SecretConfiguration.ConnectionString)
-                .UseLoggerFactory(AppLoggerFactory)
-                .Options;
-            using var context = new TThreeTeasContext(options);
-
-            Customer newCustomer = new Customer()
+            Customer customer = context.Customer.Where(c => c.Id == customerId).FirstOrDefault();
+            if (customer is null)
             {
-                FirstName = cust.FirstName,
-                LastName = cust.LastName
+                return null;
+            }
+
+            BusinessCustomer bCustomer = new BusinessCustomer()
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
             };
-            context.Customer.Add(newCustomer);
-            context.SaveChanges();
+            return bCustomer;
         }
 
-        public static ICollection<BusinessCustomer> GetCustomersByLastName(BusinessCustomer customer)
+        public static ICollection<BusinessCustomer> GetCustomersByLastName(string lastName)
         {
-            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
-            .UseSqlServer(SecretConfiguration.ConnectionString)
-            .UseLoggerFactory(AppLoggerFactory)
-            .Options;
-            using var context = new TThreeTeasContext(options);
+            using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessCustomer> customersWithLastName = new List<BusinessCustomer>();
-            foreach (Customer c in context.Customer)
+            foreach (Customer customer in context.Customer.Where(c => c.LastName.ToLower() == lastName.ToLower()))
             {
-                if (c.LastName.ToLower() == customer.LastName.ToLower())
-                {
-                    customersWithLastName.Add(new BusinessCustomer()
-                    {
-                        Id = c.Id,
-                        FirstName = c.FirstName,
-                        LastName = c.LastName
-                    });
-                }
+                BusinessCustomer bCustomer = GetCustomerById(customer.Id);
+                customersWithLastName.Add(bCustomer);
             }
             return customersWithLastName;
         }
 
-        public static bool CustomerExistsById(int cId)
+        public static void AddCustomer(BusinessCustomer customer)
         {
-            DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
-                .UseSqlServer(SecretConfiguration.ConnectionString)
-                .UseLoggerFactory(CustomerData.AppLoggerFactory)
-                .Options;
-            using var context = new TThreeTeasContext(options);
+            using var context = new TThreeTeasContext(SQLOptions.options);
 
-            Customer customer = context.Customer.Where(c => c.Id == cId).FirstOrDefault();
-            return !(customer is null);
+            Customer addCustomer = new Customer()
+            {
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
+            context.Customer.Add(addCustomer);
+            context.SaveChanges();
         }
     }
 }
