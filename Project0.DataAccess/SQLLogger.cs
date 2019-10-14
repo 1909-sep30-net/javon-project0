@@ -6,7 +6,10 @@ namespace Project0.DataAccess
     {
         public static readonly ILoggerFactory AppLoggerFactory = LoggerFactory.Create(builder =>
         {
-            builder.AddConsole();
+            builder
+                .AddFilter("Microsoft", LogLevel.Warning)
+                .AddFilter("System", LogLevel.Warning)
+                .AddConsole();
         });
     }
 }
