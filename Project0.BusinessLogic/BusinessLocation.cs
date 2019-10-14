@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace Project0.BusinessLogic
 {
+    /// <summary>
+    /// The Location object for the Business Logic. Upon creation, validates the location data and
+    /// allows methods to add products to the inventory and decrement from the inventory with constraints.
+    /// </summary>
     public class BusinessLocation
     {
         public int Id { get; set; }
@@ -12,16 +16,29 @@ namespace Project0.BusinessLogic
         public string State { get; set; }
         public Dictionary<BusinessProduct, int> inventory = new Dictionary<BusinessProduct, int>();
 
+        /// <summary>
+        /// Adds a product to this location's inventory.
+        /// </summary>
+        /// <param name="bProduct">The product to add</param>
+        /// <param name="stock">The quantity of the product to add</param>
         public void AddProduct(BusinessProduct bProduct, int stock)
         {
             inventory.Add(bProduct, stock);
         }
 
+        /// <summary>
+        /// Returns the location ID, address, city, state, and zip code in string format
+        /// </summary>
+        /// <returns>The location ID, address, city, state, and zip code</returns>
         public override string ToString()
         {
             return $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}";
         }
 
+        /// <summary>
+        /// Returns the each product and stock in the inventory of this location in string format
+        /// </summary>
+        /// <returns>Each product and stock in the inventory of this location</returns>
         public string ToStringInventory()
         {
             string str = $"[Inventory]\n";
@@ -32,6 +49,11 @@ namespace Project0.BusinessLogic
             return str;
         }
 
+        /// <summary>
+        /// Decrements the stock of the inventory of this location.
+        /// </summary>
+        /// <param name="bProduct">The product to decrement</param>
+        /// <param name="qty">The amount of the product to decrement</param>
         public void DecrementStock(BusinessProduct bProduct, int qty)
         {
             if (!inventory.Keys.Any(p => p.Id == bProduct.Id))

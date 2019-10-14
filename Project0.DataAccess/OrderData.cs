@@ -5,8 +5,16 @@ using System.Linq;
 
 namespace Project0.DataAccess
 {
+    /// <summary>
+    /// DataAccess static class for retrieving and updating the Order objects in the database.
+    /// </summary>
     public static class OrderData
     {
+        /// <summary>
+        /// Retrieves the BusinessOrder with the given order id
+        /// </summary>
+        /// <param name="orderId">The id of the order</param>
+        /// <returns>The BusinessOrder object with the given order id</returns>
         public static BusinessOrder GetOrderWithId(int orderId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -44,6 +52,11 @@ namespace Project0.DataAccess
             return bOrder;
         }
 
+        /// <summary>
+        /// Retrieves all orders at a given location.
+        /// </summary>
+        /// <param name="locationId">The id of the location</param>
+        /// <returns>All BusinessOrders at a given location</returns>
         public static ICollection<BusinessOrder> GetOrdersWithLocationId(int locationId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -56,6 +69,11 @@ namespace Project0.DataAccess
             return bOrders;
         }
 
+        /// <summary>
+        /// Retrieves all orders of a customer
+        /// </summary>
+        /// <param name="customerId">The id of the customer</param>
+        /// <returns>All BusinessOrders of a customer</returns>
         public static ICollection<BusinessOrder> GetOrdersWithCustomerId(int customerId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -68,6 +86,13 @@ namespace Project0.DataAccess
             return bOrders;
         }
 
+        /// <summary>
+        /// Creates an order
+        /// </summary>
+        /// <param name="bOrder">
+        /// The BusinessOrder which contains all the necessary information to create an order such as
+        /// line items and updated inventory
+        /// </param>
         public static void CreateOrder(BusinessOrder bOrder)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);

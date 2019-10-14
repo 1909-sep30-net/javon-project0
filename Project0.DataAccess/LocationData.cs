@@ -5,8 +5,18 @@ using System.Linq;
 
 namespace Project0.DataAccess
 {
+    /// <summary>
+    /// DataAccess static class for retrieving and updating the Location objects in the database.
+    /// </summary>
     public static class LocationData
     {
+        /// <summary>
+        /// Retrieves the location with the given location id.
+        /// </summary>
+        /// <param name="locationId">The id of the location</param>
+        /// <returns>
+        /// The BusinessLocation object that maps to the location with the given location id
+        /// </returns>
         public static BusinessLocation GetLocationWithId(int locationId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -42,6 +52,10 @@ namespace Project0.DataAccess
             return bLocation;
         }
 
+        /// <summary>
+        /// Retrieves all of the locations in the database.
+        /// </summary>
+        /// <returns>All BusinessLocation objects in the database</returns>
         public static ICollection<BusinessLocation> GetLocations()
         {
             using var context = new TThreeTeasContext(SQLOptions.options);

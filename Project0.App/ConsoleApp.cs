@@ -7,6 +7,10 @@ namespace Project0.App
     {
         private const string logFile = @"C:\revature\javon-project0\Log.txt";
 
+        /// <summary>
+        /// Entry point to the ConsoleApp.
+        /// </summary>
+        /// <param name="args">Arguments to program running</param>
         private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration().WriteTo.File(logFile).CreateLogger();

@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace Project0.BusinessLogic
 {
+    /// <summary>
+    /// The Customer object for the Business Logic. Upon creation, validates the customer data.
+    /// </summary>
     public class BusinessCustomer
     {
         private const int maxNameLength = 30;
@@ -11,6 +14,9 @@ namespace Project0.BusinessLogic
 
         public int Id { get; set; }
 
+        /// <summary>
+        /// When set, validates the customer's first name and capitalizes it.
+        /// </summary>
         public string FirstName
         {
             get => firstName;
@@ -21,6 +27,9 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// When set, validates the customer's last name and capitalizes it.
+        /// </summary>
         public string LastName
         {
             get => lastName;
@@ -31,6 +40,10 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates that the customer's first name is not empty, not too long, and is alphabetical.
+        /// </summary>
+        /// <param name="first">First name of the customer</param>
         private void ValidateCustomerFirstName(string first)
         {
             if (first.Length == 0) throw new BusinessCustomerException("[!] First name is empty");
@@ -38,6 +51,10 @@ namespace Project0.BusinessLogic
             else if (!first.All(Char.IsLetter)) throw new BusinessCustomerException("[!] First name is not alphabetical");
         }
 
+        /// <summary>
+        /// Validates that the customer's last name is not empty, not too long, and is alphabetical.
+        /// </summary>
+        /// <param name="last">Last name of the customer</param>
         private void ValidateCustomerLastName(string last)
         {
             if (last.Length == 0) throw new BusinessCustomerException("[!] Last name is empty");
@@ -45,6 +62,10 @@ namespace Project0.BusinessLogic
             else if (!last.All(Char.IsLetter)) throw new BusinessCustomerException("[!] Last name is not alphabetical");
         }
 
+        /// <summary>
+        /// Returns the customer id, first name, and last name in string format
+        /// </summary>
+        /// <returns>The customer id, first name, and last name in string format</returns>
         public override string ToString()
         {
             return $"[Customer {Id}] {FirstName} {LastName}";

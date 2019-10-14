@@ -6,8 +6,15 @@ using System.Linq;
 
 namespace Project0.App
 {
+    /// <summary>
+    /// Handles the different menu options that the user requests.
+    /// </summary>
     internal class MenuHandler
     {
+        /// <summary>
+        /// Runs the handle methods depending on what the user requested.
+        /// </summary>
+        /// <param name="req">The user request</param>
         internal static void HandleRequest(MenuRequest req)
         {
             if (req.Equals(MenuRequest.PlaceOrder))
@@ -48,6 +55,9 @@ namespace Project0.App
             }
         }
 
+        /// <summary>
+        /// Handles the prompting, input validation, and console output for a customer creating an order.
+        /// </summary>
         private static void HandleRequestPlaceOrder()
         {
             int line = 0;
@@ -128,6 +138,10 @@ namespace Project0.App
             OrderData.CreateOrder(bOrder);
         }
 
+        /// <summary>
+        /// Handles request for adding a customer, prompting for a first and last name and validating
+        /// the inputs.
+        /// </summary>
         private static void HandleRequestAddCustomer()
         {
             BusinessCustomer customer = new BusinessCustomer();
@@ -144,6 +158,10 @@ namespace Project0.App
             Console.WriteLine($"[+] The customer {customer.FirstName} {customer.LastName} has been added\n");
         }
 
+        /// <summary>
+        /// Handles the prompting for a customer with last name and displaying all customers with
+        /// that last name.
+        /// </summary>
         private static void HandleRequestSearchCustomer()
         {
             BusinessCustomer customer = new BusinessCustomer();
@@ -158,6 +176,10 @@ namespace Project0.App
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Handles displaying the details of an order - the location, the customer, and each of its
+        /// line items.
+        /// </summary>
         private static void HandleRequestDisplayDetailsOfOrder()
         {
             Console.WriteLine("[?] What is the order ID");
@@ -176,6 +198,9 @@ namespace Project0.App
             Console.WriteLine($"{order}\n");
         }
 
+        /// <summary>
+        /// Handles displaying the order history of a given location ID.
+        /// </summary>
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
             Console.WriteLine("[?] What is the location ID");
@@ -196,6 +221,9 @@ namespace Project0.App
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Handles displaying the order history of a given customer ID.
+        /// </summary>
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
             Console.WriteLine("[?] What is the customer ID");
@@ -216,6 +244,9 @@ namespace Project0.App
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Handles displaying all of the locations and their inventories.
+        /// </summary>
         private static void HandleRequestDisplayAllLocations()
         {
             ICollection<BusinessLocation> locations = LocationData.GetLocations();
@@ -228,12 +259,18 @@ namespace Project0.App
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// Handles the exiting of the program.
+        /// </summary>
         private static void HandleRequestExit()
         {
             Console.WriteLine("[*] Bye!\n");
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Handles the case where the user entered an invalid option.
+        /// </summary>
         private static void HandleRequestInvalid()
         {
             Console.WriteLine("[!] Invalid input\n");

@@ -2,8 +2,14 @@
 
 namespace Project0.App
 {
+    /// <summary>
+    /// Menu class is responsible for displaying console output and prompting and parsing of the user input.
+    /// </summary>
     internal class Menu
     {
+        /// <summary>
+        /// Display the menu options to standard out.
+        /// </summary>
         internal static void DisplayMenu()
         {
             Console.WriteLine("[*] Welcome to TThreeTeas");
@@ -19,6 +25,10 @@ namespace Project0.App
             Console.WriteLine("[?] What would you like to do");
         }
 
+        /// <summary>
+        /// Prompt the user for input for the menu options and parse it into a MenuRequest.
+        /// </summary>
+        /// <returns></returns>
         internal static MenuRequest PromptUser()
         {
             string input = Console.ReadLine();

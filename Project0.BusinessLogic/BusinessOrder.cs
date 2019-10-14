@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace Project0.BusinessLogic
 {
+    /// <summary>
+    /// The Order object for the Business Logic. Upon creation, validates the order data and allows
+    /// methods to add lineitems to the order and validates these line items.
+    /// </summary>
     public class BusinessOrder
     {
         private const int maxQuantity = 20;
@@ -14,6 +18,9 @@ namespace Project0.BusinessLogic
         public DateTime OrderTime { get; set; }
         public Dictionary<BusinessProduct, int> LineItems { get; } = new Dictionary<BusinessProduct, int>();
 
+        /// <summary>
+        /// Returns the total sale of the order.
+        /// </summary>
         public decimal Total
         {
             get
@@ -24,6 +31,9 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates that the order does not have too many line items. Throws an exception if it does.
+        /// </summary>
         private void ValidateNotTooManyLines()
         {
             if (LineItems.Count > maxLines)
@@ -32,6 +42,11 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates that the order does not have a duplicate product ID in the line items. Throws
+        /// an exception if it does.
+        /// </summary>
+        /// <param name="productId"></param>
         private void ValidateNotDuplicateProductId(int productId)
         {
             if (LineItems.Any(l => l.Key.Id == productId))
@@ -40,6 +55,12 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates the quantity of the line item is greater than zero. Throws an exception if it
+        /// is not.
+        /// </summary>
+        /// <param name="product">The product of the line item to validate</param>
+        /// <param name="qty">The quantity of the line item</param>
         private void ValidateQuantityGreaterThanZero(BusinessProduct product, int qty)
         {
             if (qty <= 0)
@@ -48,6 +69,12 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates that the quantity of the line item is less than the limit. Throws an exception
+        /// if it is not.
+        /// </summary>
+        /// <param name="product">The product of the line item to validate</param>
+        /// <param name="qty">The quantity of the line item</param>
         private void ValidateQuantityBelowLimit(BusinessProduct product, int qty)
         {
             if (qty > maxQuantity)
@@ -56,6 +83,9 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Validates that the order has at least one line. Throws an exception if it does not.
+        /// </summary>
         private void ValidateHasLines()
         {
             if (LineItems.Count == 0)
@@ -64,6 +94,10 @@ namespace Project0.BusinessLogic
             }
         }
 
+        /// <summary>
+        /// Adds a list of line items to this order and validates these line items.
+        /// </summary>
+        /// <param name="lineItems">The list of line items</param>
         public void AddLineItems(Dictionary<BusinessProduct, int> lineItems)
         {
             foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
@@ -77,6 +111,11 @@ namespace Project0.BusinessLogic
             ValidateHasLines();
         }
 
+        /// <summary>
+        /// Returns the id, store location, customer, order time, line items, and sale total in
+        /// string format.
+        /// </summary>
+        /// <returns>The id, store location, customer, order time, line items, and sale total</returns>
         public override string ToString()
         {
             String header = $"[Order {Id}]\n" +

@@ -5,8 +5,18 @@ using System.Linq;
 
 namespace Project0.DataAccess
 {
+    /// <summary>
+    /// DataAccess static class for retrieving and updating the Customer objects in the database.
+    /// </summary>
     public static class CustomerData
     {
+        /// <summary>
+        /// Retrieves the customer with the given customer id.
+        /// </summary>
+        /// <param name="customerId">The id of the customer</param>
+        /// <returns>
+        /// BusinessCustomer object that the Customer maps to with the given customer id
+        /// </returns>
         public static BusinessCustomer GetCustomerWithId(int customerId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -26,6 +36,11 @@ namespace Project0.DataAccess
             return bCustomer;
         }
 
+        /// <summary>
+        /// Retrieves the customers with the given last name
+        /// </summary>
+        /// <param name="lastName">The last name of the customer</param>
+        /// <returns>BusinessCustomer object that the Customer maps to with the given last name</returns>
         public static ICollection<BusinessCustomer> GetCustomersWithLastName(string lastName)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
@@ -39,6 +54,10 @@ namespace Project0.DataAccess
             return customersWithLastName;
         }
 
+        /// <summary>
+        /// Adds a customer to the database.
+        /// </summary>
+        /// <param name="customer">The customer to add to the database</param>
         public static void AddCustomer(BusinessCustomer customer)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);

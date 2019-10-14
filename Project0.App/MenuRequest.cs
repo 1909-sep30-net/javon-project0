@@ -1,5 +1,8 @@
 ﻿namespace Project0.App
 {
+    /// <summary>
+    /// The enumerated possible options the user can input in the menu.
+    /// </summary>
     internal enum MenuRequest
     {
         PlaceOrder = 0,
