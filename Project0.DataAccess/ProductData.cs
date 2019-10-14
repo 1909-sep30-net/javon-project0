@@ -6,7 +6,7 @@ namespace Project0.DataAccess
 {
     public class ProductData
     {
-        public static BusinessProduct GetProductById(int pId)
+        public static BusinessProduct GetProductWithId(int pId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
 

@@ -7,7 +7,7 @@ namespace Project0.DataAccess
 {
     public static class CustomerData
     {
-        public static BusinessCustomer GetCustomerById(int customerId)
+        public static BusinessCustomer GetCustomerWithId(int customerId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
 
@@ -26,14 +26,14 @@ namespace Project0.DataAccess
             return bCustomer;
         }
 
-        public static ICollection<BusinessCustomer> GetCustomersByLastName(string lastName)
+        public static ICollection<BusinessCustomer> GetCustomersWithLastName(string lastName)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessCustomer> customersWithLastName = new List<BusinessCustomer>();
             foreach (Customer customer in context.Customer.Where(c => c.LastName.ToLower() == lastName.ToLower()))
             {
-                BusinessCustomer bCustomer = GetCustomerById(customer.Id);
+                BusinessCustomer bCustomer = GetCustomerWithId(customer.Id);
                 customersWithLastName.Add(bCustomer);
             }
             return customersWithLastName;
@@ -43,12 +43,12 @@ namespace Project0.DataAccess
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
 
-            Customer addCustomer = new Customer()
+            Customer additionalCustomer = new Customer()
             {
                 FirstName = customer.FirstName,
                 LastName = customer.LastName
             };
-            context.Customer.Add(addCustomer);
+            context.Customer.Add(additionalCustomer);
             context.SaveChanges();
         }
     }

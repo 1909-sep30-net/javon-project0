@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project0.BusinessLogic
 {
     public class BusinessOrder
     {
-        private const int maxQtySize = 20;
-        private const int maxLines = 50;
+        private const int maxQuantity = 20;
+        private const int maxLines = 30;
         public int Id { get; set; }
         public BusinessLocation StoreLocation { get; set; }
         public BusinessCustomer Customer { get; set; }
         public DateTime OrderTime { get; set; }
-        public Dictionary<BusinessProduct, int> LineItems { get; set; } = new Dictionary<BusinessProduct, int>();
+        public Dictionary<BusinessProduct, int> LineItems { get; } = new Dictionary<BusinessProduct, int>();
 
         public decimal Total
         {
@@ -23,33 +24,57 @@ namespace Project0.BusinessLogic
             }
         }
 
-        private void ValidateEnoughLines()
+        private void ValidateNotTooManyLines()
         {
-            if (LineItems.Keys.Count > maxLines)
+            if (LineItems.Count > maxLines)
             {
                 throw new BusinessOrderException($"[!] Too many lines for this order");
             }
         }
 
-        private void ValidateItemNotTooLarge(BusinessProduct product, int qty)
+        private void ValidateNotDuplicateProductId(int productId)
         {
-            if (qty > maxQtySize)
+            if (LineItems.Any(l => l.Key.Id == productId))
             {
-                throw new BusinessOrderException($"[!] {product} of quantity {qty} item too large");
+                throw new BusinessOrderException($"[!] Duplicate product Id {productId}");
             }
         }
 
-        private void ValidateDecrementStock(BusinessProduct product, int qty)
+        private void ValidateQuantityGreaterThanZero(BusinessProduct product, int qty)
         {
-            StoreLocation.DecrementStock(product, qty);
+            if (qty <= 0)
+            {
+                throw new BusinessOrderException($"[!] {product} of quantity {qty} item does not have a quantity greater than 0");
+            }
         }
 
-        public void AddLineItem(BusinessProduct product, int qty)
+        private void ValidateQuantityBelowLimit(BusinessProduct product, int qty)
         {
-            ValidateEnoughLines();
-            ValidateItemNotTooLarge(product, qty);
-            //ValidateDecrementStock(product, qty);
-            LineItems.Add(product, qty);
+            if (qty > maxQuantity)
+            {
+                throw new BusinessOrderException($"[!] {product} of quantity {qty} item has a quantity greater than {maxQuantity}");
+            }
+        }
+
+        private void ValidateHasLines()
+        {
+            if (LineItems.Count == 0)
+            {
+                throw new BusinessOrderException($"[!] Order has no lines");
+            }
+        }
+
+        public void AddLineItems(Dictionary<BusinessProduct, int> lineItems)
+        {
+            foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
+            {
+                ValidateNotTooManyLines();
+                ValidateNotDuplicateProductId(lineItem.Key.Id);
+                ValidateQuantityGreaterThanZero(lineItem.Key, lineItem.Value);
+                ValidateQuantityBelowLimit(lineItem.Key, lineItem.Value);
+                LineItems.Add(lineItem.Key, lineItem.Value);
+            }
+            ValidateHasLines();
         }
 
         public override string ToString()

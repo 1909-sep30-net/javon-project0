@@ -1,4 +1,6 @@
-﻿namespace Project0.App
+﻿using System;
+
+namespace Project0.App
 {
     internal class ConsoleApp
     {
@@ -6,9 +8,16 @@
         {
             while (true)
             {
-                Menu.DisplayMenu();
-                MenuRequest req = Menu.PromptUser();
-                MenuHandler.HandleRequest(req);
+                try
+                {
+                    Menu.DisplayMenu();
+                    MenuRequest req = Menu.PromptUser();
+                    MenuHandler.HandleRequest(req);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"{ex.Message}\n");
+                }
             }
         }
     }

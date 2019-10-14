@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Project0.BusinessLogic
 {
@@ -9,11 +10,11 @@ namespace Project0.BusinessLogic
         public string City { get; set; }
         public string Zipcode { get; set; }
         public string State { get; set; }
-        private Dictionary<BusinessProduct, int> inventory = new Dictionary<BusinessProduct, int>();
+        public Dictionary<BusinessProduct, int> inventory = new Dictionary<BusinessProduct, int>();
 
-        public void AddProduct(BusinessProduct product, int stock)
+        public void AddProduct(BusinessProduct bProduct, int stock)
         {
-            inventory.Add(product, stock);
+            inventory.Add(bProduct, stock);
         }
 
         public override string ToString()
@@ -21,18 +22,30 @@ namespace Project0.BusinessLogic
             return $"[Location {Id}] {Address}, {City}, {State}, {Zipcode}";
         }
 
-        internal void DecrementStock(BusinessProduct product, int qty)
+        public string ToStringInventory()
         {
-            if (inventory.ContainsKey(product))
+            string str = $"[Inventory]\n";
+            foreach (KeyValuePair<BusinessProduct, int> item in inventory)
             {
-                throw new BusinessLocationException($"[!] Location does not have {product} in stock");
+                str += $"{item.Key} [Quantity] {item.Value}\n";
+            }
+            return str;
+        }
+
+        public void DecrementStock(BusinessProduct bProduct, int qty)
+        {
+            if (!inventory.Keys.Any(p => p.Id == bProduct.Id))
+            {
+                throw new BusinessLocationException($"[!] Location does not have {bProduct} in stock");
             }
 
-            if (inventory[product] < qty)
+            BusinessProduct selectedProduct = inventory.Keys.Where(p => p.Id == bProduct.Id).FirstOrDefault();
+
+            if (qty > inventory[selectedProduct])
             {
-                throw new BusinessLocationException($"[!] Location does not have {product} with {qty} stock, only has {inventory[product]} in stock");
+                throw new BusinessLocationException($"[!] Location {Id} does not have {selectedProduct} with {qty} stock, only has {inventory[selectedProduct]} in stock");
             }
-            inventory[product] -= qty;
+            inventory[selectedProduct] -= qty;
         }
     }
 }

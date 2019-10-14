@@ -7,7 +7,7 @@ namespace Project0.DataAccess
     {
         public static DbContextOptions<TThreeTeasContext> options = new DbContextOptionsBuilder<TThreeTeasContext>()
             .UseSqlServer(SecretConfiguration.ConnectionString)
-            .UseLoggerFactory(SQLLogger.AppLoggerFactory)
+            //.UseLoggerFactory(SQLLogger.AppLoggerFactory)
             .Options;
     }
 }

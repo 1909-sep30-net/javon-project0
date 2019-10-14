@@ -7,7 +7,7 @@ namespace Project0.DataAccess
 {
     public static class LocationData
     {
-        public static BusinessLocation GetLocationById(int locationId)
+        public static BusinessLocation GetLocationWithId(int locationId)
         {
             using var context = new TThreeTeasContext(SQLOptions.options);
 
@@ -49,7 +49,7 @@ namespace Project0.DataAccess
             List<BusinessLocation> bLocations = new List<BusinessLocation>();
             foreach (Location location in context.Location)
             {
-                BusinessLocation bLocation = GetLocationById(location.Id);
+                BusinessLocation bLocation = GetLocationWithId(location.Id);
                 bLocations.Add(bLocation);
             }
             return bLocations;

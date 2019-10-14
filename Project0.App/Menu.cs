@@ -6,7 +6,8 @@ namespace Project0.App
     {
         internal static void DisplayMenu()
         {
-            Console.WriteLine("[*] Welcome to Javon's Tea Store");
+            Console.WriteLine("[*] Welcome to TThreeTeas");
+            Console.WriteLine("[Menu]");
             Console.WriteLine("[0] Place order");
             Console.WriteLine("[1] Add a new customer");
             Console.WriteLine("[2] Search for a customer");
@@ -20,18 +21,8 @@ namespace Project0.App
 
         internal static MenuRequest PromptUser()
         {
-            int inp = 1000;
-            try
-            {
-                string input = Console.ReadLine();
-                inp = Int32.Parse(input);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return (MenuRequest)inp;
+            string input = Console.ReadLine();
+            return (MenuRequest)Int32.Parse(input);
         }
     }
 }

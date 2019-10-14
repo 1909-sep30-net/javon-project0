@@ -2,6 +2,7 @@
 using Project0.DataAccess;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Project0.App
 {
@@ -49,228 +50,181 @@ namespace Project0.App
 
         private static void HandleRequestPlaceOrder()
         {
-            try
+            int line = 0;
+            Dictionary<int, int> lineItemsParsed = new Dictionary<int, int>();
+            Dictionary<BusinessProduct, int> lineItems = new Dictionary<BusinessProduct, int>();
+
+            Console.WriteLine("[?] What is the customer ID");
+            string inputCustomerId = Console.ReadLine();
+            if (!Int32.TryParse(inputCustomerId, out int customerId))
             {
-                int customerId;
-                int locationId;
-                int dummy;
-                int line = 0;
-                Dictionary<int, int> lineItemsParsed = new Dictionary<int, int>();
-                Dictionary<BusinessProduct, int> lineItems = new Dictionary<BusinessProduct, int>();
-
-                Console.WriteLine("[?] What is the customer ID");
-                string inputCustomerId = Console.ReadLine();
-                if (!Int32.TryParse(inputCustomerId, out customerId))
-                {
-                    throw new FormatException($"[!] Input for customer ID is not an integer\n");
-                }
-
-                Console.WriteLine("[?] What is the location ID");
-                string inputLocationId = Console.ReadLine();
-                if (!Int32.TryParse(inputLocationId, out locationId))
-                {
-                    throw new FormatException($"[!] Input for location ID is not an integer\n");
-                }
-
-                while (++line > 0)
-                {
-                    int productId;
-                    int quantity;
-
-                    Console.WriteLine($"[?] Line {line} - Enter product ID or press enter to finish your order");
-                    string inputProductId = Console.ReadLine();
-                    if (inputProductId == "")
-                    {
-                        break;
-                    }
-                    if (!Int32.TryParse(inputProductId, out productId))
-                    {
-                        throw new FormatException($"[!] Input for product ID is not an integer\n");
-                    }
-
-                    Console.WriteLine($"[?] Line {line} - Enter quantity");
-                    string inputQuantity = Console.ReadLine();
-                    if (!Int32.TryParse(inputQuantity, out quantity))
-                    {
-                        throw new FormatException($"[!] Input for quantity is not an integer\n");
-                    }
-
-                    lineItemsParsed.Add(productId, quantity);
-                }
-
-                if (!CustomerData.CustomerExistsById(customerId))
-                {
-                    throw new BusinessCustomerException($"[!] Customer does not exist\n");
-                }
-
-                if (!LocationData.LocationExistsById(locationId))
-                {
-                    throw new BusinessLocationException($"[!] Location does not exist\n");
-                }
-
-                foreach (KeyValuePair<int, int> lineItem in lineItemsParsed)
-                {
-                    if (!ProductData.ProductExistsById(lineItem.Key))
-                    {
-                        throw new BusinessProductException($"[!] Product {lineItem.Key} does not exist\n");
-                    }
-                }
-
-                BusinessCustomer bCustomer = CustomerData.GetCustomerById(customerId);
-                BusinessLocation bLocation = LocationData.GetLocationById(locationId);
-
-                BusinessOrder bOrder = new BusinessOrder()
-                {
-                    StoreLocation = bLocation,
-                    Customer = bCustomer,
-                    OrderTime = DateTime.Now,
-                };
-                foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
-                {
-                    bOrder.AddLineItem(lineItem.Key, lineItem.Value);
-                }
-                OrderData.CreateOrder(bOrder);
+                throw new FormatException($"[!] Input for customer ID is not an integer");
             }
-            catch (Exception ex)
+
+            Console.WriteLine("[?] What is the location ID");
+            string inputLocationId = Console.ReadLine();
+            if (!Int32.TryParse(inputLocationId, out int locationId))
             {
-                Console.WriteLine($"{ex.Message}\n");
+                throw new FormatException($"[!] Input for location ID is not an integer");
             }
+
+            while (++line > 0)
+            {
+                Console.WriteLine($"[?] Line {line} - Enter product ID or press enter to finish your order");
+                string inputProductId = Console.ReadLine();
+                if (inputProductId == "")
+                {
+                    break;
+                }
+                if (!Int32.TryParse(inputProductId, out int productId))
+                {
+                    throw new FormatException($"[!] Input for product ID is not an integer");
+                }
+
+                Console.WriteLine($"[?] Line {line} - Enter quantity");
+                string inputQuantity = Console.ReadLine();
+                if (!Int32.TryParse(inputQuantity, out int quantity))
+                {
+                    throw new FormatException($"[!] Input for quantity is not an integer");
+                }
+
+                lineItemsParsed.Add(productId, quantity);
+            }
+
+            if (CustomerData.GetCustomerWithId(customerId) is null)
+            {
+                throw new BusinessCustomerException($"[!] Customer does not exist");
+            }
+
+            if (LocationData.GetLocationWithId(locationId) is null)
+            {
+                throw new BusinessLocationException($"[!] Location does not exist");
+            }
+
+            foreach (KeyValuePair<int, int> lineItemParsed in lineItemsParsed)
+            {
+                BusinessProduct bProduct = ProductData.GetProductWithId(lineItemParsed.Key);
+                if (bProduct is null)
+                {
+                    throw new BusinessProductException($"[!] Product {lineItemParsed.Key} does not exist");
+                }
+                lineItems.Add(bProduct, lineItemParsed.Value);
+            }
+
+            BusinessCustomer bCustomer = CustomerData.GetCustomerWithId(customerId);
+            BusinessLocation bLocation = LocationData.GetLocationWithId(locationId);
+
+            BusinessOrder bOrder = new BusinessOrder()
+            {
+                StoreLocation = bLocation,
+                Customer = bCustomer,
+                OrderTime = DateTime.Now
+            };
+            bOrder.AddLineItems(lineItems);
+            foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
+            {
+                bOrder.StoreLocation.DecrementStock(lineItem.Key, lineItem.Value);
+            }
+            OrderData.CreateOrder(bOrder);
         }
 
         private static void HandleRequestAddCustomer()
         {
-            try
-            {
-                BusinessCustomer cust = new BusinessCustomer();
+            BusinessCustomer customer = new BusinessCustomer();
 
-                Console.WriteLine("[?] What is the first name of the customer");
-                string firstName = Console.ReadLine();
-                cust.FirstName = firstName;
+            Console.WriteLine("[?] What is the first name of the customer");
+            string firstName = Console.ReadLine();
+            customer.FirstName = firstName;
 
-                Console.WriteLine("[?] What is the last name of the customer");
-                string lastName = Console.ReadLine();
-                cust.LastName = lastName;
+            Console.WriteLine("[?] What is the last name of the customer");
+            string lastName = Console.ReadLine();
+            customer.LastName = lastName;
 
-                CustomerData.AddCustomer(cust);
-                Console.WriteLine($"[+] The customer {cust.FirstName} {cust.LastName} has been added\n");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"{ex.Message}\n");
-            }
+            CustomerData.AddCustomer(customer);
+            Console.WriteLine($"[+] The customer {customer.FirstName} {customer.LastName} has been added\n");
         }
 
         private static void HandleRequestSearchCustomer()
         {
-            try
-            {
-                BusinessCustomer cust = new BusinessCustomer();
+            BusinessCustomer customer = new BusinessCustomer();
 
-                Console.WriteLine("[?] What is the last name of the customer you are searching for");
-                string lastName = Console.ReadLine();
-                cust.LastName = lastName;
+            Console.WriteLine("[?] What is the last name of the customer you are searching for");
+            string lastName = Console.ReadLine();
+            customer.LastName = lastName;
 
-                ICollection<BusinessCustomer> customersWithLastName = CustomerData.GetCustomersByLastName(cust);
-                Console.WriteLine($"[*] There are {customersWithLastName.Count} customers with the last name \"{lastName}\"");
-                foreach (BusinessCustomer c in customersWithLastName)
-                {
-                    Console.WriteLine(c);
-                }
-                Console.WriteLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            ICollection<BusinessCustomer> customersWithLastName = CustomerData.GetCustomersWithLastName(customer.LastName);
+            Console.WriteLine($"[*] There are {customersWithLastName.Count} customers with the last name \"{lastName}\"");
+            customersWithLastName.ToList().ForEach(c => Console.WriteLine(c));
+            Console.WriteLine();
         }
 
         private static void HandleRequestDisplayDetailsOfOrder()
         {
             Console.WriteLine("[?] What is the order ID");
             string inputOrderId = Console.ReadLine();
-            int orderId;
-            if (Int32.TryParse(inputOrderId, out orderId))
+            if (!Int32.TryParse(inputOrderId, out int orderId))
             {
-                BusinessOrder order = OrderData.GetOrderById(orderId);
-                if (order != null)
-                {
-                    Console.WriteLine(order);
-                }
-                else
-                {
-                    Console.WriteLine("[!] Order does not exist in the database\n");
-                }
+                throw new FormatException("[!] Input for order ID is not an integer");
             }
-            else
+
+            BusinessOrder order = OrderData.GetOrderWithId(orderId);
+            if (order is null)
             {
-                Console.WriteLine("[!] Input for order ID is not an integer\n");
+                throw new BusinessOrderException($"[!] Order {orderId} does not exist in the database");
             }
+
+            Console.WriteLine($"{order}\n");
         }
 
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
             Console.WriteLine("[?] What is the location ID");
-            string locationId = Console.ReadLine();
-            int lId;
-            if (Int32.TryParse(locationId, out lId))
+            string inputLocationId = Console.ReadLine();
+            if (!Int32.TryParse(inputLocationId, out int locationId))
             {
-                if (LocationData.LocationExistsById(lId))
-                {
-                    ICollection<BusinessOrder> ordersWithLocation = OrderData.GetOrdersByLocationId(lId);
-                    Console.WriteLine($"[*] There are {ordersWithLocation.Count} orders for location {lId}");
-                    foreach (BusinessOrder o in ordersWithLocation)
-                    {
-                        Console.WriteLine(o);
-                    }
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine($"[!] Location {lId} does not exist\n");
-                }
+                throw new FormatException("[!] Input for location ID is not an integer");
             }
-            else
+
+            if (LocationData.GetLocationWithId(locationId) is null)
             {
-                Console.WriteLine("[!] Input for location ID is not an integer\n");
+                throw new BusinessLocationException($"[!] Location {locationId} does not exist");
             }
+
+            ICollection<BusinessOrder> ordersWithLocation = OrderData.GetOrdersWithLocationId(locationId);
+            Console.WriteLine($"[*] There are {ordersWithLocation.Count} orders for location {locationId}");
+            ordersWithLocation.ToList().ForEach(o => Console.WriteLine(o));
+            Console.WriteLine();
         }
 
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
             Console.WriteLine("[?] What is the customer ID");
-            string customerId = Console.ReadLine();
-            int cId;
-            if (Int32.TryParse(customerId, out cId))
+            string inputCustomerId = Console.ReadLine();
+            if (!Int32.TryParse(inputCustomerId, out int customerId))
             {
-                if (!(CustomerData.GetCustomerById(cId) is null))
-                {
-                    ICollection<BusinessOrder> ordersWithCustomer = OrderData.GetOrdersByCustomerId(cId);
-                    Console.WriteLine($"[*] There are {ordersWithCustomer.Count} orders for customer {cId}");
-                    foreach (BusinessOrder o in ordersWithCustomer)
-                    {
-                        Console.WriteLine(o);
-                    }
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.WriteLine($"[!] Customer {cId} does not exist\n");
-                }
+                throw new FormatException("[!] Input for customer ID is not an integer");
             }
-            else
+
+            if (CustomerData.GetCustomerWithId(customerId) is null)
             {
-                Console.WriteLine("[!] Input for customer ID is not an integer\n");
+                throw new BusinessCustomerException($"[!] Customer {customerId} does not exist");
             }
+
+            ICollection<BusinessOrder> ordersWithCustomer = OrderData.GetOrdersWithCustomerId(customerId);
+            Console.WriteLine($"[*] There are {ordersWithCustomer.Count} orders for customer {customerId}");
+            ordersWithCustomer.ToList().ForEach(o => Console.WriteLine(o));
+            Console.WriteLine();
         }
 
         private static void HandleRequestDisplayAllLocations()
         {
             ICollection<BusinessLocation> locations = LocationData.GetLocations();
             Console.WriteLine($"[*] There are {locations.Count} locations");
-            foreach (BusinessLocation loc in locations)
+            locations.ToList().ForEach(l =>
             {
-                Console.WriteLine(loc);
-            }
+                Console.WriteLine(l);
+                Console.WriteLine(l.ToStringInventory());
+            });
             Console.WriteLine();
         }
 
