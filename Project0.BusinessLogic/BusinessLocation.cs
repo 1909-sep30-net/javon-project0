@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Serilog;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Project0.BusinessLogic
@@ -56,6 +57,7 @@ namespace Project0.BusinessLogic
         /// <param name="qty">The amount of the product to decrement</param>
         public void DecrementStock(BusinessProduct bProduct, int qty)
         {
+            Log.Information($"Decrementing stock of location {Id} of product {bProduct} with quantity {qty}");
             if (!inventory.Keys.Any(p => p.Id == bProduct.Id))
             {
                 throw new BusinessLocationException($"[!] Location does not have {bProduct} in stock");

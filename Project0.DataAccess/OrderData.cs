@@ -1,5 +1,6 @@
 ﻿using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,6 +18,7 @@ namespace Project0.DataAccess
         /// <returns>The BusinessOrder object with the given order id</returns>
         public static BusinessOrder GetOrderWithId(int orderId)
         {
+            Log.Information($"Called the Data Access method to get the order with order id {orderId}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             Orders order = context.Orders.FirstOrDefault(o => o.Id == orderId);
@@ -59,6 +61,7 @@ namespace Project0.DataAccess
         /// <returns>All BusinessOrders at a given location</returns>
         public static ICollection<BusinessOrder> GetOrdersWithLocationId(int locationId)
         {
+            Log.Information($"Called the Data Access method to get the orders with location id {locationId}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessOrder> bOrders = new List<BusinessOrder>();
@@ -76,6 +79,7 @@ namespace Project0.DataAccess
         /// <returns>All BusinessOrders of a customer</returns>
         public static ICollection<BusinessOrder> GetOrdersWithCustomerId(int customerId)
         {
+            Log.Information($"Called the Data Access method to get the orders with customer id {customerId}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessOrder> bOrders = new List<BusinessOrder>();
@@ -95,6 +99,7 @@ namespace Project0.DataAccess
         /// </param>
         public static void CreateOrder(BusinessOrder bOrder)
         {
+            Log.Information($"Called the Data Access method to create an order with business order {bOrder}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             Orders additionalOrder = new Orders()
@@ -106,6 +111,7 @@ namespace Project0.DataAccess
 
             context.Orders.Add(additionalOrder);
             context.SaveChanges();
+            Log.Information($"Saved the additional order to the database");
 
             List<LineItem> additionalLineItems = new List<LineItem>();
             foreach (KeyValuePair<BusinessProduct, int> lineItem in bOrder.LineItems)
@@ -123,6 +129,7 @@ namespace Project0.DataAccess
                 context.LineItem.Add(additionalLineItem);
             }
             context.SaveChanges();
+            Log.Information($"Saved the additional line items to the database");
 
             List<Inventory> updatedInventories = new List<Inventory>();
             foreach (KeyValuePair<BusinessProduct, int> inventory in bOrder.StoreLocation.inventory)
@@ -140,6 +147,7 @@ namespace Project0.DataAccess
                 context.Inventory.Update(updatedInventory);
             }
             context.SaveChanges();
+            Log.Information($"Saved the updated inventories to the database");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Project0.BusinessLogic;
 using Project0.DataAccess;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Project0.App
         /// <param name="req">The user request</param>
         internal static void HandleRequest(MenuRequest req)
         {
+            Log.Information("Determining which request to handle");
             if (req.Equals(MenuRequest.PlaceOrder))
             {
                 HandleRequestPlaceOrder();
@@ -60,12 +62,14 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestPlaceOrder()
         {
+            Log.Information("Handling request placing order");
             int line = 0;
             Dictionary<int, int> lineItemsParsed = new Dictionary<int, int>();
             Dictionary<BusinessProduct, int> lineItems = new Dictionary<BusinessProduct, int>();
 
             Console.WriteLine("[?] What is the customer ID");
             string inputCustomerId = Console.ReadLine();
+            Log.Information($"User entered '{inputCustomerId}' for customer id");
             if (!Int32.TryParse(inputCustomerId, out int customerId))
             {
                 throw new FormatException($"[!] Input for customer ID is not an integer");
@@ -73,6 +77,7 @@ namespace Project0.App
 
             Console.WriteLine("[?] What is the location ID");
             string inputLocationId = Console.ReadLine();
+            Log.Information($"User entered '{inputLocationId}' for location id");
             if (!Int32.TryParse(inputLocationId, out int locationId))
             {
                 throw new FormatException($"[!] Input for location ID is not an integer");
@@ -82,8 +87,10 @@ namespace Project0.App
             {
                 Console.WriteLine($"[?] Line {line} - Enter product ID or press enter to finish your order");
                 string inputProductId = Console.ReadLine();
+                Log.Information($"User entered '{inputProductId}' for product id on line {line}");
                 if (inputProductId == "")
                 {
+                    Log.Information($"User entered nothing for product id on line {line}");
                     break;
                 }
                 if (!Int32.TryParse(inputProductId, out int productId))
@@ -93,6 +100,7 @@ namespace Project0.App
 
                 Console.WriteLine($"[?] Line {line} - Enter quantity");
                 string inputQuantity = Console.ReadLine();
+                Log.Information($"User entered '{inputQuantity}' for quantity on line {line}");
                 if (!Int32.TryParse(inputQuantity, out int quantity))
                 {
                     throw new FormatException($"[!] Input for quantity is not an integer");
@@ -144,14 +152,17 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestAddCustomer()
         {
+            Log.Information("Handling request adding customer");
             BusinessCustomer customer = new BusinessCustomer();
 
             Console.WriteLine("[?] What is the first name of the customer");
             string firstName = Console.ReadLine();
+            Log.Information($"User entered '{firstName}' for the first name");
             customer.FirstName = firstName;
 
             Console.WriteLine("[?] What is the last name of the customer");
             string lastName = Console.ReadLine();
+            Log.Information($"User entered '{lastName}' for the last name");
             customer.LastName = lastName;
 
             CustomerData.AddCustomer(customer);
@@ -164,10 +175,12 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestSearchCustomer()
         {
+            Log.Information("Handling request searching customer by last name");
             BusinessCustomer customer = new BusinessCustomer();
 
             Console.WriteLine("[?] What is the last name of the customer you are searching for");
             string lastName = Console.ReadLine();
+            Log.Information($"User entered '{lastName}' for the last name");
             customer.LastName = lastName;
 
             ICollection<BusinessCustomer> customersWithLastName = CustomerData.GetCustomersWithLastName(customer.LastName);
@@ -184,6 +197,7 @@ namespace Project0.App
         {
             Console.WriteLine("[?] What is the order ID");
             string inputOrderId = Console.ReadLine();
+            Log.Information($"User entered '{inputOrderId}' for order id");
             if (!Int32.TryParse(inputOrderId, out int orderId))
             {
                 throw new FormatException("[!] Input for order ID is not an integer");
@@ -203,8 +217,10 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestDisplayOrderHistoryOfLocation()
         {
+            Log.Information("Handling request displaying order history of location");
             Console.WriteLine("[?] What is the location ID");
             string inputLocationId = Console.ReadLine();
+            Log.Information($"User entered '{inputLocationId}' for location id");
             if (!Int32.TryParse(inputLocationId, out int locationId))
             {
                 throw new FormatException("[!] Input for location ID is not an integer");
@@ -226,8 +242,10 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestDisplayOrderHistoryOfCustomer()
         {
+            Log.Information("Handling request displaying order history of customer");
             Console.WriteLine("[?] What is the customer ID");
             string inputCustomerId = Console.ReadLine();
+            Log.Information($"User entered '{inputCustomerId}' for customer id");
             if (!Int32.TryParse(inputCustomerId, out int customerId))
             {
                 throw new FormatException("[!] Input for customer ID is not an integer");
@@ -249,6 +267,7 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestDisplayAllLocations()
         {
+            Log.Information("Handling request display all locations");
             ICollection<BusinessLocation> locations = LocationData.GetLocations();
             Console.WriteLine($"[*] There are {locations.Count} locations");
             locations.ToList().ForEach(l =>
@@ -264,6 +283,7 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestExit()
         {
+            Log.Information("Handling request exit");
             Console.WriteLine("[*] Bye!\n");
             Environment.Exit(0);
         }
@@ -273,6 +293,7 @@ namespace Project0.App
         /// </summary>
         private static void HandleRequestInvalid()
         {
+            Log.Information("Handling request invalid input");
             Console.WriteLine("[!] Invalid input\n");
         }
     }

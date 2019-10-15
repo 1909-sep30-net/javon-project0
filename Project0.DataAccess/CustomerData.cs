@@ -1,5 +1,6 @@
 ﻿using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,7 @@ namespace Project0.DataAccess
         /// </returns>
         public static BusinessCustomer GetCustomerWithId(int customerId)
         {
+            Log.Information($"Called the Data Access method to get the customer with customer id {customerId}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             Customer customer = context.Customer.Where(c => c.Id == customerId).FirstOrDefault();
@@ -43,6 +45,7 @@ namespace Project0.DataAccess
         /// <returns>BusinessCustomer object that the Customer maps to with the given last name</returns>
         public static ICollection<BusinessCustomer> GetCustomersWithLastName(string lastName)
         {
+            Log.Information($"Called the Data Access method to get the customers with last name {lastName}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessCustomer> customersWithLastName = new List<BusinessCustomer>();
@@ -57,15 +60,16 @@ namespace Project0.DataAccess
         /// <summary>
         /// Adds a customer to the database.
         /// </summary>
-        /// <param name="customer">The customer to add to the database</param>
-        public static void AddCustomer(BusinessCustomer customer)
+        /// <param name="bCustomer">The customer to add to the database</param>
+        public static void AddCustomer(BusinessCustomer bCustomer)
         {
+            Log.Information($"Called the Data Access method to add the customer {bCustomer}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             Customer additionalCustomer = new Customer()
             {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName
+                FirstName = bCustomer.FirstName,
+                LastName = bCustomer.LastName
             };
             context.Customer.Add(additionalCustomer);
             context.SaveChanges();

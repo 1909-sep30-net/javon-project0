@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -100,6 +101,7 @@ namespace Project0.BusinessLogic
         /// <param name="lineItems">The list of line items</param>
         public void AddLineItems(Dictionary<BusinessProduct, int> lineItems)
         {
+            Log.Information($"Adding line items {lineItems}");
             foreach (KeyValuePair<BusinessProduct, int> lineItem in lineItems)
             {
                 ValidateNotTooManyLines();

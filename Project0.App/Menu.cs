@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace Project0.App
 {
@@ -12,6 +13,7 @@ namespace Project0.App
         /// </summary>
         internal static void DisplayMenu()
         {
+            Log.Information("Displaying menu");
             Console.WriteLine("[*] Welcome to TThreeTeas");
             Console.WriteLine("[Menu]");
             Console.WriteLine("[0] Place order");
@@ -31,7 +33,9 @@ namespace Project0.App
         /// <returns></returns>
         internal static MenuRequest PromptUser()
         {
+            Log.Information("Prompting user");
             string input = Console.ReadLine();
+            Log.Information($"User entered '{input}'");
             return (MenuRequest)Int32.Parse(input);
         }
     }

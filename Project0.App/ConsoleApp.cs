@@ -28,6 +28,7 @@ namespace Project0.App
                 catch (Exception ex)
                 {
                     Console.WriteLine($"{ex.Message}\n");
+                    Log.Error(ex.Message);
                 }
             }
         }

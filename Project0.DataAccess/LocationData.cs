@@ -1,5 +1,6 @@
 ﻿using Project0.BusinessLogic;
 using Project0.DataAccess.Entities;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,6 +20,7 @@ namespace Project0.DataAccess
         /// </returns>
         public static BusinessLocation GetLocationWithId(int locationId)
         {
+            Log.Information($"Called the Data Access method to get the location with location id {locationId}");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             Location location = context.Location.Where(l => l.Id == locationId).FirstOrDefault();
@@ -58,6 +60,7 @@ namespace Project0.DataAccess
         /// <returns>All BusinessLocation objects in the database</returns>
         public static ICollection<BusinessLocation> GetLocations()
         {
+            Log.Information($"Called the Data Access method to get the all locations");
             using var context = new TThreeTeasContext(SQLOptions.options);
 
             List<BusinessLocation> bLocations = new List<BusinessLocation>();
