@@ -101,7 +101,6 @@ INSERT INTO Inventory (LocationID, ProductID, Stock) VALUES
 
 -- INSERT INTO Customers
 INSERT INTO Customer (FirstName, LastName) VALUES
-	('Javon', 'Negahban'),
 	('Ojan', 'Negahban'),
 	('Henry', 'Ford'),
 	('Nikola', 'Tesla'),
@@ -114,7 +113,7 @@ INSERT INTO Orders (LocationID, CustomerID, OrderTime) VALUES
 	(1, 2, DATEADD(hh, -2, GETDATE())),
 	(3, 4, DATEADD(hh, -1, GETDATE())),
 	(1, 1, DATEADD(hh, -11, GETDATE()));
-
+	
 -- INSERT INTO LineItems for each Order
 INSERT INTO LineItem (OrdersID, ProductID, Quantity) VALUES
 	(1, 2, 1),
